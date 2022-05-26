@@ -7,7 +7,7 @@ long_description = Path("README.md").read_text()
 setup(
     name="page-sender",
     version="0.0.1",
-    description="Short description",
+    description="Responsable for interacting with others storages infrastructures",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/thiagola92/page-sender",
@@ -21,6 +21,10 @@ setup(
     keywords="database, amqp",
     license="MIT",
     packages=find_packages(exclude=["tests"]),
-    install_requires=[],
+    install_requires=[
+        "aioredis>=2.0.1",
+        "motor>=3.0.0",
+        "structlog>=21.5.0",
+    ],
     python_requires=">=3.10",
 )
