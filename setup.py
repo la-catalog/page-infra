@@ -22,6 +22,7 @@ setup(
     license="MIT",
     packages=find_packages(exclude=["tests"]),
     install_requires=[
+        "aio-pika>=8.0.0",
         "aioredis>=2.0.1",
         "motor>=3.0.0",
         "structlog>=21.5.0",
