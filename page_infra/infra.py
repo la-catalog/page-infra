@@ -1,6 +1,8 @@
+from datetime import datetime
+
+from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient
 from page_sku import SKU
-from pydantic import AnyHttpUrl
 from pymongo.collection import Collection
 from structlog.stdlib import BoundLogger, get_logger
 
@@ -20,6 +22,15 @@ class Infra:
         self._mongo_url = mongo_url
         self._meilisearch_url = meilisearch_url
 
+    def _on_inserting(self, skus: list[SKU], marketplace: str, duration: datetime):
+        self._logger.info(
+            event="SKUs inserted",
+            duration=duration,
+            quantity=len(skus),
+            marketplace=marketplace,
+        )
+
+    @Stopwatch(_on_inserting)
     async def insert_skus(self, skus: list[SKU], marketplace: str):
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
