@@ -7,12 +7,12 @@ class Marketplace:
         self._logger = logger
 
         # Rabbit
-        self._sku_queue = ""
-        self._image_queue = ""
+        self.sku_queue = ""
+        self.image_queue = ""
 
         # Mongo
-        self._sku_database = ""
-        self._sku_collection = ""
+        self.sku_database = ""
+        self.sku_collection = ""
 
         # Meilisearch
-        self._sku_index = ""
+        self.sku_index = ""

@@ -2,6 +2,9 @@ from structlog.stdlib import BoundLogger
 
 from page_infra.abstractions import Marketplace
 from page_infra.exceptions import UnknowMarketplaceError
+from page_infra.marketplaces.google_shopping import GoogleShopping
+from page_infra.marketplaces.mercado_livre import MercadoLivre
+from page_infra.marketplaces.rihappy import Rihappy
 
 options: dict[str, type[Marketplace]] = {
     "google_shopping": GoogleShopping,
@@ -10,7 +13,7 @@ options: dict[str, type[Marketplace]] = {
 }
 
 
-def get_marketplace_fetcher(marketplace: str, logger: BoundLogger) -> Marketplace:
+def get_marketplace_infra(marketplace: str, logger: BoundLogger) -> Marketplace:
     try:
         new_logger = logger.bind(marketplace=marketplace)
         marketplace_class = options[marketplace]
