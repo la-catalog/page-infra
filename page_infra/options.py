@@ -1,7 +1,7 @@
 from structlog.stdlib import BoundLogger
 
-from page_sender.abstractions import Marketplace
-from page_sender.exceptions import UnknowMarketplaceError
+from page_infra.abstractions import Marketplace
+from page_infra.exceptions import UnknowMarketplaceError
 
 options: dict[str, type[Marketplace]] = {
     "google_shopping": GoogleShopping,

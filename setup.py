@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 long_description = Path("README.md").read_text()
 
 setup(
-    name="page-sender",
+    name="page-infra",
     version="0.0.1",
     description="Responsable for interacting with others storages infrastructures",
     long_description=long_description,
