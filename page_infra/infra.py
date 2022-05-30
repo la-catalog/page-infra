@@ -22,7 +22,9 @@ class Infra:
         self._mongo_url = mongo_url
         self._meilisearch_url = meilisearch_url
 
-    def _on_inserting(self, skus: list[SKU], marketplace: str, duration: datetime):
+    def _on_inserting(
+        self, skus: list[SKU], marketplace: str, duration: datetime
+    ) -> None:
         self._logger.info(
             event="SKUs inserted",
             duration=duration,
@@ -31,7 +33,7 @@ class Infra:
         )
 
     @Stopwatch(_on_inserting)
-    async def insert_skus(self, skus: list[SKU], marketplace: str):
+    async def insert_skus(self, skus: list[SKU], marketplace: str) -> None:
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.sku_database]
