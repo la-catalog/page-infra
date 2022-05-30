@@ -26,6 +26,7 @@ setup(
         "aioredis>=2.0.1",
         "motor>=3.0.0",
         "structlog>=21.5.0",
+        "la-stopwatch>=0.0.7",
     ],
     python_requires=">=3.10",
 )
