@@ -3,10 +3,12 @@ from datetime import datetime
 from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient
 from page_sku import SKU
+from pymongo import TEXT
 from pymongo.collection import Collection
 from structlog.stdlib import BoundLogger, get_logger
 
 from page_infra.options import get_marketplace_infra
+from page_infra.options import options as marketplace_options
 
 
 class Infra:
@@ -21,6 +23,20 @@ class Infra:
         self._redis_url = redis_url
         self._mongo_url = mongo_url
         self._meilisearch_url = meilisearch_url
+
+    async def setup_collections(self) -> None:
+        """Make sure that collections have indexes"""
+
+        mongo = AsyncIOMotorClient(self._mongo_url)
+
+        for marketplace in marketplace_options:
+            infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+            collection = mongo[infra.sku_database][infra.sku_collection]
+
+            # Temporary: while Motor doesn't support typing
+            collection: Collection
+
+            collection.create_indexes([("code", TEXT)])
 
     def _on_inserting(
         self, skus: list[SKU], marketplace: str, duration: datetime
@@ -40,7 +56,7 @@ class Infra:
         collection = database[infra.sku_collection]
         documents = [sku.dict() for sku in skus]
 
-        # Temporary: while Motor doesn't have typing
+        # Temporary: while Motor doesn't support typing
         collection: Collection
 
         await collection.insert_many(documents=documents)
