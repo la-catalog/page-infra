@@ -37,7 +37,8 @@ class Infra:
             # Temporary: while Motor doesn't support typing
             collection: Collection
 
-            await collection.create_indexes(IndexModel([("code", TEXT)]))
+            index = IndexModel([("code", TEXT)])
+            await collection.create_indexes([index])
 
     def _on_inserting(
         self, skus: list[SKU], marketplace: str, duration: datetime
