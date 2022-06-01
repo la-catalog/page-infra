@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from page_sku import SKU
 from pymongo import TEXT
 from pymongo.collection import Collection
+from pymongo.operations import IndexModel
 from structlog.stdlib import BoundLogger, get_logger
 
 from page_infra.options import get_marketplace_infra
@@ -36,7 +37,7 @@ class Infra:
             # Temporary: while Motor doesn't support typing
             collection: Collection
 
-            await collection.create_indexes([("code", TEXT)])
+            await collection.create_indexes(IndexModel([("code", TEXT)]))
 
     def _on_inserting(
         self, skus: list[SKU], marketplace: str, duration: datetime
