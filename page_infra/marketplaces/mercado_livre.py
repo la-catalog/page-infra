@@ -16,4 +16,4 @@ class MercadoLivre(Marketplace):
         self.sku_collection = "mercado_livre"
 
         # Meilisearch
-        self.sku_index = "mercado_livre"
+        self.catalog_index = "mercado_livre"

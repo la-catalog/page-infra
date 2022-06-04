@@ -16,4 +16,4 @@ class GoogleShopping(Marketplace):
         self.sku_collection = "google_shopping"
 
         # Meilisearch
-        self.sku_index = "google_shopping"
+        self.catalog_index = "google_shopping"

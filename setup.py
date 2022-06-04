@@ -24,6 +24,7 @@ setup(
     install_requires=[
         "aio-pika>=8.0.0",
         "aioredis>=2.0.1",
+        "meilisearch>=0.18.3",
         "motor>=3.0.0",
         "structlog>=21.5.0",
         "la-stopwatch>=0.0.7",

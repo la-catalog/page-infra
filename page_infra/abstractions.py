@@ -15,4 +15,4 @@ class Marketplace:
         self.sku_collection = ""
 
         # Meilisearch
-        self.sku_index = ""
+        self.catalog_index = ""

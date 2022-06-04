@@ -16,4 +16,4 @@ class Rihappy(Marketplace):
         self.sku_collection = "rihappy"
 
         # Meilisearch
-        self.sku_index = "rihappy"
+        self.catalog_index = "rihappy"

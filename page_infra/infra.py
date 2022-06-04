@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import meilisearch
 from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient
 from page_sku import SKU
@@ -39,6 +40,28 @@ class Infra:
 
             index = IndexModel([("code", TEXT)])
             await collection.create_indexes([index])
+
+    async def setup_indexes(self) -> None:
+        client = meilisearch.Client(self._meilisearch_url)
+
+        for marketplace in marketplace_options:
+            infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+            client.index(infra.catalog_index).update_settings(
+                {
+                    "rankingRules": [
+                        "_id",
+                        "gtin",
+                        "name",
+                        "brand",
+                    ],
+                    "typoTolerance": {
+                        "disableOnAttributes": [
+                            "_id",
+                            "gtin",
+                        ]
+                    },
+                }
+            )
 
     def _on_inserting(
         self, skus: list[SKU], marketplace: str, duration: datetime
