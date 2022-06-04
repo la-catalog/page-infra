@@ -26,7 +26,7 @@ class Infra:
         self._mongo_url = mongo_url
         self._meilisearch_url = meilisearch_url
 
-    async def setup_collections(self) -> None:
+    async def setup_sku_database(self) -> None:
         """Make sure that collections have indexes"""
 
         mongo = AsyncIOMotorClient(self._mongo_url)
@@ -41,7 +41,9 @@ class Infra:
             index = IndexModel([("code", TEXT)])
             await collection.create_indexes([index])
 
-    async def setup_indexes(self) -> None:
+    async def setup_catalog_database(self) -> None:
+        """Make sure that catalog have settings"""
+
         client = meilisearch.Client(self._meilisearch_url)
 
         for marketplace in marketplace_options:
