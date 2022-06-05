@@ -127,7 +127,8 @@ class Infra:
         # Temporary: while Motor doesn't support typing
         collection: Collection
 
-        await collection.insert_many(documents=documents)
+        if len(documents) > 0:
+            await collection.insert_many(documents=documents)
 
         self._logger.info(
             event="SKUs inserted",
