@@ -4,6 +4,7 @@ import meilisearch
 from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient
 from page_sku import SKU
+from pydantic import AnyHttpUrl
 from pymongo import TEXT
 from pymongo.collection import Collection
 from pymongo.operations import IndexModel
@@ -70,12 +71,15 @@ class Infra:
                 }
             )
 
-    async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[bool]:
+    async def identify_new_urls(
+        self, urls: list[AnyHttpUrl], marketplace: str
+    ) -> list[bool]:
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.sku_database]
         collection = database[infra.sku_collection]
+        urls = [str(url) for url in urls]
 
         # Temporary: while Motor doesn't support typing
         collection: Collection
