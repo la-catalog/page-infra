@@ -70,6 +70,32 @@ class Infra:
                 }
             )
 
+    async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[bool]:
+        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+        mongo = AsyncIOMotorClient(self._mongo_url)
+        database = mongo[infra.sku_database]
+        collection = database[infra.sku_collection]
+
+        # Temporary: while Motor doesn't support typing
+        collection: Collection
+
+        return urls
+
+    async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[bool]:
+        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+        mongo = AsyncIOMotorClient(self._mongo_url)
+        database = mongo[infra.sku_database]
+        collection = database[infra.sku_collection]
+        codes = [sku.code for sku in skus if sku.code]
+
+        # Temporary: while Motor doesn't support typing
+        collection: Collection
+
+        async for doc in collection.find({"code": {"$in": codes}}, {"code": 1}):
+            codes.remove(doc["code"])
+
+        return [sku for sku in skus if sku.code in codes]
+
     def _on_inserting(
         self, skus: list[SKU], marketplace: str, duration: datetime
     ) -> None:
