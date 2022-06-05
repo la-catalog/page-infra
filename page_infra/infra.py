@@ -71,6 +71,7 @@ class Infra:
             )
 
     async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[bool]:
+        stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.sku_database]
@@ -79,9 +80,18 @@ class Infra:
         # Temporary: while Motor doesn't support typing
         collection: Collection
 
+        self._logger.info(
+            event="Finish identify urls",
+            urls_before=urls,
+            urls_after=urls,  # TODO: change to new_urls after being implemented
+            marketplace=marketplace,
+            duration=str(stopwatch),
+        )
+
         return urls
 
     async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[bool]:
+        stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.sku_database]
@@ -94,20 +104,20 @@ class Infra:
         async for doc in collection.find({"code": {"$in": codes}}, {"code": 1}):
             codes.remove(doc["code"])
 
-        return [sku for sku in skus if sku.code in codes]
+        new_skus = [sku for sku in skus if sku.code in codes]
 
-    def _on_inserting(
-        self, skus: list[SKU], marketplace: str, duration: datetime
-    ) -> None:
         self._logger.info(
-            event="SKUs inserted",
-            duration=duration,
-            quantity=len(skus),
+            event="Finish identify skus",
+            skus_before=len(skus),
+            skus_after=len(new_skus),
             marketplace=marketplace,
+            duration=str(stopwatch),
         )
 
-    @Stopwatch(_on_inserting)
+        return new_skus
+
     async def insert_skus(self, skus: list[SKU], marketplace: str) -> None:
+        stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.sku_database]
@@ -118,3 +128,10 @@ class Infra:
         collection: Collection
 
         await collection.insert_many(documents=documents)
+
+        self._logger.info(
+            event="SKUs inserted",
+            quantity=len(skus),
+            marketplace=marketplace,
+            duration=str(stopwatch),
+        )
