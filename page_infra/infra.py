@@ -19,12 +19,14 @@ class Infra:
         redis_url: str,
         mongo_url: str,
         meilisearch_url: str,
+        meilisearch_key: str,
         logger: BoundLogger = get_logger(),
     ):
         self._logger = logger.bind(lib="page_infra")
         self._redis_url = redis_url
         self._mongo_url = mongo_url
         self._meilisearch_url = meilisearch_url
+        self._meilisearch_key = meilisearch_key
 
     async def setup_sku_database(self) -> None:
         """Make sure that collections have indexes"""
@@ -44,7 +46,10 @@ class Infra:
     async def setup_catalog_database(self) -> None:
         """Make sure that catalog have settings"""
 
-        client = meilisearch.Client(self._meilisearch_url)
+        client = meilisearch.Client(
+            url=self._meilisearch_url,
+            api_key=self._meilisearch_key,
+        )
 
         for marketplace in marketplace_options:
             infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
