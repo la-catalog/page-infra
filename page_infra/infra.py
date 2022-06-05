@@ -85,7 +85,7 @@ class Infra:
         collection: Collection
 
         self._logger.info(
-            event="Finish identify urls",
+            event="Finish identify URLs",
             urls_before=urls,
             urls_after=urls,  # TODO: change to new_urls after being implemented
             marketplace=marketplace,
@@ -111,7 +111,7 @@ class Infra:
         new_skus = [sku for sku in skus if sku.code in codes]
 
         self._logger.info(
-            event="Finish identify skus",
+            event="Finish identify SKUs",
             skus_before=len(skus),
             skus_after=len(new_skus),
             marketplace=marketplace,
