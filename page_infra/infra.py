@@ -1,4 +1,5 @@
 import meilisearch
+import redis.asyncio as redis
 from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient
 from page_sku import SKU
@@ -77,7 +78,29 @@ class Infra:
                 }
             )
 
-    async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[bool]:
+    async def identify_recent_urls(
+        self, urls: list[str], marketplace: str
+    ) -> list[str]:
+        stopwatch = Stopwatch()
+        redis_ = redis.from_url(self._redis_url)
+
+        async def new_url(url):
+            lock = redis_.lock(name=url, timeout=60, blocking_timeout=0.1)
+            return await lock.acquire(blocking=False)
+
+        new_urls = [url for url in urls if new_url(url)]
+
+        self._logger.info(
+            event="Finish identify recent URLs",
+            urls_before=urls,
+            urls_after=new_urls,
+            marketplace=marketplace,
+            duration=str(stopwatch),
+        )
+
+        return new_urls
+
+    async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[str]:
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
@@ -88,7 +111,7 @@ class Infra:
         collection: Collection
 
         self._logger.info(
-            event="Finish identify URLs",
+            event="Finish identify new URLs",
             urls_before=urls,
             urls_after=urls,  # TODO: change to new_urls after being implemented
             marketplace=marketplace,
@@ -97,7 +120,7 @@ class Infra:
 
         return urls
 
-    async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[bool]:
+    async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[SKU]:
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
@@ -114,7 +137,7 @@ class Infra:
         new_skus = [sku for sku in skus if sku.code in codes]
 
         self._logger.info(
-            event="Finish identify SKUs",
+            event="Finish identify new SKUs",
             skus_before=len(skus),
             skus_after=len(new_skus),
             marketplace=marketplace,
