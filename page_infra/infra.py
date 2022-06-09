@@ -53,11 +53,12 @@ class Infra:
             infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
             client.index(infra.catalog_index).update_settings(
                 {
-                    "rankingRules": [
+                    "searchableAttributes": [
                         "_id",
                         "gtin",
                         "name",
                         "brand",
+                        "description",
                     ],
                     "typoTolerance": {
                         "disableOnAttributes": [
