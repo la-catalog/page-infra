@@ -136,6 +136,7 @@ class Infra:
         return urls
 
     async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[SKU]:
+        """Identify the SKUs that are not in the database."""
         if not skus:
             return skus
 
@@ -178,7 +179,7 @@ class Infra:
         # Temporary: while Motor doesn't support typing
         collection: Collection
 
-        if len(documents) > 0:
+        if documents > 0:
             await collection.insert_many(documents=documents)
 
         self._logger.info(
