@@ -79,6 +79,20 @@ class Infra:
             )
 
     async def discard_recent_urls(self, urls: list[str], marketplace: str) -> list[str]:
+        """
+        Discard any URL that have been consumed in the last X seconds.
+
+        This is important when many SKUs have the URL for the same SKU.
+        For example,
+            When scraping A we discovered the URL for B
+            And when scraping C we also discovered the URL for B
+
+        We don't want to scrap B two times, that's why we check
+        on redis if have being scraped in the last X seconds.
+        """
+        if not urls:
+            return urls
+
         stopwatch = Stopwatch()
         redis_ = redis.from_url(self._redis_url)
 
@@ -89,7 +103,7 @@ class Infra:
         new_urls = [url for url in urls if new_url(url)]
 
         self._logger.info(
-            event="Finish identify recent URLs",
+            event="Finish discarding recent URLs",
             urls_before=urls,
             urls_after=new_urls,
             marketplace=marketplace,
@@ -99,6 +113,9 @@ class Infra:
         return new_urls
 
     async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[str]:
+        if not urls:
+            return urls
+
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
@@ -119,6 +136,9 @@ class Infra:
         return urls
 
     async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[SKU]:
+        if not skus:
+            return skus
+
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
@@ -145,6 +165,9 @@ class Infra:
         return new_skus
 
     async def insert_skus(self, skus: list[SKU], marketplace: str) -> None:
+        if not skus:
+            return skus
+
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
