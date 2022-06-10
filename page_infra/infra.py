@@ -78,9 +78,7 @@ class Infra:
                 }
             )
 
-    async def identify_recent_urls(
-        self, urls: list[str], marketplace: str
-    ) -> list[str]:
+    async def discard_recent_urls(self, urls: list[str], marketplace: str) -> list[str]:
         stopwatch = Stopwatch()
         redis_ = redis.from_url(self._redis_url)
 
