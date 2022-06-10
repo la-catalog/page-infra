@@ -100,7 +100,7 @@ class Infra:
             lock = redis_.lock(name=url, timeout=60, blocking_timeout=0.1)
             return await lock.acquire(blocking=False)
 
-        new_urls = [url for url in urls if new_url(url)]
+        new_urls = [url for url in urls if await new_url(url)]
 
         self._logger.info(
             event="Finish discarding recent URLs",
