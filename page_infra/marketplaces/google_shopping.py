@@ -8,6 +8,7 @@ class GoogleShopping(Marketplace):
         super().__init__(marketplace, logger)
 
         # Rabbit
+        self.search_queue = "google_shopping_search"
         self.sku_queue = "google_shopping_sku"
         self.image_queue = "google_shopping_image"
 

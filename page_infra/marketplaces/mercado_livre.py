@@ -8,6 +8,7 @@ class MercadoLivre(Marketplace):
         super().__init__(marketplace, logger)
 
         # Rabbit
+        self.search_queue = "rihappy_search"
         self.sku_queue = "mercado_livre_sku"
         self.image_queue = "mercado_livre_image"
 
