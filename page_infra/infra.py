@@ -28,7 +28,7 @@ class Infra:
         self._meilisearch_key = meilisearch_key
 
     async def setup_sku_database(self) -> None:
-        """Make sure that collections have indexes"""
+        """Make sure that collections exists and have indexes"""
 
         mongo = AsyncIOMotorClient(self._mongo_url)
 
