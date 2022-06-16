@@ -42,6 +42,11 @@ class Infra:
             index = IndexModel([("code", 1)], unique=True)
             await collection.create_indexes([index])
 
+            collection = mongo[infra.search_database][infra.search_collection]
+
+            index = IndexModel([("query", 1)], unique=True)
+            await collection.create_indexes([index])
+
     async def setup_catalog_database(self) -> None:
         """Make sure that catalog have settings"""
 
