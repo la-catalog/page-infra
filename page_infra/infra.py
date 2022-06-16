@@ -39,7 +39,7 @@ class Infra:
             # Temporary: while Motor doesn't support typing
             collection: Collection
 
-            index = IndexModel([("code", TEXT)])
+            index = IndexModel([("code", 1)], unique=True)
             await collection.create_indexes([index])
 
     async def setup_catalog_database(self) -> None:

@@ -13,7 +13,9 @@ class Rihappy(Marketplace):
 
         # Mongo
         self.sku_database = "rihappy"
-        self.sku_collection = "rihappy"
+        self.sku_collection = "skus"
+        self.search_database = "rihappy"
+        self.search_collection = "search"
 
         # Meilisearch
         self.catalog_index = "rihappy"

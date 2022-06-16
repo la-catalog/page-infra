@@ -13,7 +13,9 @@ class GoogleShopping(Marketplace):
 
         # Mongo
         self.sku_database = "google_shopping"
-        self.sku_collection = "google_shopping"
+        self.sku_collection = "skus"
+        self.search_database = "google_shopping"
+        self.search_collection = "search"
 
         # Meilisearch
         self.catalog_index = "google_shopping"
