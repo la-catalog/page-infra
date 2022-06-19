@@ -101,7 +101,7 @@ class Infra:
         it's actually a AsyncIOMotorCursor. I should change
         once Motor gives support for typing.
         """
-        mongo = await AsyncIOMotorClient(self._mongo_url)
+        mongo = AsyncIOMotorClient(self._mongo_url)
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         collection = mongo[infra.search_database][infra.search_collection]
 
