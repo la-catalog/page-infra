@@ -8,6 +8,7 @@ from pymongo.collection import Collection
 from pymongo.operations import IndexModel
 from structlog.stdlib import BoundLogger, get_logger
 
+from page_infra.exceptions import MissingMeilisearchURL, MissingMongoURL
 from page_infra.options import get_marketplace_infra
 from page_infra.options import options as marketplace_options
 
@@ -15,10 +16,10 @@ from page_infra.options import options as marketplace_options
 class Infra:
     def __init__(
         self,
-        redis_url: str,
-        mongo_url: str,
-        meilisearch_url: str,
-        meilisearch_key: str,
+        redis_url: str | None = None,
+        mongo_url: str | None = None,
+        meilisearch_url: str | None = None,
+        meilisearch_key: str | None = None,
         logger: BoundLogger = get_logger(),
     ):
         self._logger = logger.bind(lib="page_infra")
