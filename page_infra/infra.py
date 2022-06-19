@@ -27,6 +27,21 @@ class Infra:
         self._meilisearch_url = meilisearch_url
         self._meilisearch_key = meilisearch_key
 
+    async def setup_search_database(self) -> None:
+        """Make sure that collections exists and have indexes"""
+
+        mongo = AsyncIOMotorClient(self._mongo_url)
+
+        for marketplace in marketplace_options:
+            infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+            collection = mongo[infra.search_database][infra.search_collection]
+
+            # Temporary (while Motor doesn't support typing)
+            collection: Collection
+
+            index = IndexModel([("query", 1)], unique=True)
+            await collection.create_indexes([index])
+
     async def setup_sku_database(self) -> None:
         """Make sure that collections exists and have indexes"""
 
@@ -36,15 +51,10 @@ class Infra:
             infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
             collection = mongo[infra.sku_database][infra.sku_collection]
 
-            # Temporary: while Motor doesn't support typing
+            # Temporary (while Motor doesn't support typing)
             collection: Collection
 
             index = IndexModel([("code", 1)], unique=True)
-            await collection.create_indexes([index])
-
-            collection = mongo[infra.search_database][infra.search_collection]
-
-            index = IndexModel([("query", 1)], unique=True)
             await collection.create_indexes([index])
 
     async def setup_catalog_database(self) -> None:
@@ -127,7 +137,7 @@ class Infra:
         database = mongo[infra.sku_database]
         collection = database[infra.sku_collection]
 
-        # Temporary: while Motor doesn't support typing
+        # Temporary (while Motor doesn't support typing)
         collection: Collection
 
         self._logger.info(
@@ -152,7 +162,7 @@ class Infra:
         collection = database[infra.sku_collection]
         codes = [sku.code for sku in skus if sku.code]
 
-        # Temporary: while Motor doesn't support typing
+        # Temporary (while Motor doesn't support typing)
         collection: Collection
 
         async for doc in collection.find({"code": {"$in": codes}}, {"code": 1}):
@@ -181,7 +191,7 @@ class Infra:
         collection = database[infra.sku_collection]
         documents = [sku.dict() for sku in skus]
 
-        # Temporary: while Motor doesn't support typing
+        # Temporary (while Motor doesn't support typing)
         collection: Collection
 
         if documents > 0:
