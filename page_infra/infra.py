@@ -2,9 +2,9 @@ import meilisearch
 import redis.asyncio as redis
 from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient
-from page_sku import SKU
-from pymongo import TEXT
+from page_models import SKU
 from pymongo.collection import Collection
+from pymongo.cursor import Cursor
 from pymongo.operations import IndexModel
 from structlog.stdlib import BoundLogger, get_logger
 
@@ -93,6 +93,23 @@ class Infra:
                     },
                 }
             )
+
+    async def get_queries(self, marketplace: str) -> Cursor:
+        """
+        Returns every query to be made on marketplaces.
+
+        I have explicit said that it returns Cursor but
+        it's actually a AsyncIOMotorCursor. I should change
+        once Motor gives support for typing.
+        """
+        mongo = await AsyncIOMotorClient(self._mongo_url)
+        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+        collection = mongo[infra.search_database][infra.search_collection]
+
+        # Temporary (while Motor doesn't support typing)
+        collection: Collection
+
+        return await collection.find({})
 
     async def discard_recent_urls(self, urls: list[str], marketplace: str) -> list[str]:
         """

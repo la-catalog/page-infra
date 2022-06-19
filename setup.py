@@ -25,6 +25,7 @@ setup(
         "aio-pika>=8.0.0",
         "meilisearch>=0.18.3",
         "motor>=3.0.0",
+        "page-models>=0.0.1",
         "redis>=4.3.3",
         "structlog>=21.5.0",
         "la-stopwatch>=0.0.7",
