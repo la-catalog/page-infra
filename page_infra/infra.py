@@ -108,7 +108,7 @@ class Infra:
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
-        return await collection.find({})
+        return collection.find({})
 
     async def discard_recent_urls(self, urls: list[str], marketplace: str) -> list[str]:
         """
