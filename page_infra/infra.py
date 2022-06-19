@@ -8,7 +8,6 @@ from pymongo.cursor import Cursor
 from pymongo.operations import IndexModel
 from structlog.stdlib import BoundLogger, get_logger
 
-from page_infra.exceptions import MissingMeilisearchURL, MissingMongoURL
 from page_infra.options import get_marketplace_infra
 from page_infra.options import options as marketplace_options
 
