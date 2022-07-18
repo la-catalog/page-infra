@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import meilisearch
 import redis.asyncio as redis
 from la_stopwatch import Stopwatch
@@ -27,33 +29,26 @@ class Infra:
         self._meilisearch_url = meilisearch_url
         self._meilisearch_key = meilisearch_key
 
-    async def setup_search_database(self) -> None:
+    async def setup_databases(self) -> None:
         """Make sure that collections exists and have indexes"""
 
         mongo = AsyncIOMotorClient(self._mongo_url)
 
         for marketplace in marketplace_options:
             infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
-            collection = mongo[infra.database][infra.search_collection]
 
             # Temporary (while Motor doesn't support typing)
             collection: Collection
 
+            collection = mongo[infra.database][infra.search_collection]
             index = IndexModel([("query", 1)], unique=True)
             await collection.create_indexes([index])
 
-    async def setup_sku_database(self) -> None:
-        """Make sure that collections exists and have indexes"""
+            collection = mongo[infra.database][infra.url_collection]
+            index = IndexModel([("url", 1)], unique=True)
+            await collection.create_indexes([index])
 
-        mongo = AsyncIOMotorClient(self._mongo_url)
-
-        for marketplace in marketplace_options:
-            infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
             collection = mongo[infra.database][infra.sku_collection]
-
-            # Temporary (while Motor doesn't support typing)
-            collection: Collection
-
             index = IndexModel([("code", 1)], unique=True)
             await collection.create_indexes([index])
 
@@ -112,7 +107,7 @@ class Infra:
 
     async def discard_recent_urls(self, urls: list[str], marketplace: str) -> list[str]:
         """
-        Discard any URL that have been consumed in the last X seconds.
+        Discard any URL that have been accessed in the last X seconds.
 
         This is important when many SKUs have the URL for the same SKU.
         For example,
@@ -144,7 +139,13 @@ class Infra:
 
         return new_urls
 
-    async def identify_new_urls(self, urls: list[str], marketplace: str) -> list[str]:
+    async def discard_old_urls(self, urls: list[str], marketplace: str) -> list[str]:
+        """
+        Discard any URL that have been accessed in the last X days.
+
+        This is important because we care about updating SKUs
+        but we don't need to update so frequently.
+        """
         if not urls:
             return urls
 
@@ -157,8 +158,13 @@ class Infra:
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
+        yesterday = datetime.utcnow() - timedelta(days=1)
+        async for doc in collection.find({"url": {"$in": urls}}):
+            if doc["accessed"] >= yesterday.isoformat():
+                urls.remove(doc["url"])
+
         self._logger.info(
-            event="Finish identifying new URLs",
+            event="Finish discarding old URLs",
             urls_before=urls,
             urls_after=urls,  # TODO: change to new_urls after being implemented
             marketplace=marketplace,
@@ -168,7 +174,9 @@ class Infra:
         return urls
 
     async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[SKU]:
-        """Identify the SKUs that are not in the database."""
+        """
+        Identify the SKUs that are not in the database or didn't change.
+        """
         if not skus:
             return skus
 
