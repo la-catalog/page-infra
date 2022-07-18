@@ -1,0 +1,53 @@
+[project]
+name = "page-infra"
+version = "0.1.0"
+description = "Responsable for interacting with others storages infrastructures"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    {name = "thiagola92", email = "thiagola92@gmail.com"},
+]
+keywords = [
+    "database",
+    "amqp",
+    "mongodb",
+    "meilisearch",
+    "reids",
+]
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "aio-pika>=8.0.3",
+    "meilisearch>=0.19.0",
+    "motor>=3.0.0",
+    "redis>=4.3.4",
+    "structlog>=21.5.0",
+    "la-stopwatch>=0.0.8",
+    "page-models @ git+https://github.com/la-catalog/page-models.git",
+]
+
+[project.urls]
+repository = "https://github.com/thiagola92/page-infra"
+
+[tool.pdm]
+
+[tool.pdm.scripts]
+tests = "python -m unittest discover -v -f -s tests"
+sort = "python -m isort -v --ac ."
+
+[tool.pdm.dev-dependencies]
+lint = [
+    "black",
+    "isort"
+]
+
+# [[tool.pdm.source]]
+# url = "https://private-site.org/pypi/simple"
+# verify_ssl = false
+# name = "lacatalog"
+
+[build-system]
+requires = ["pdm-pep517>=0.12.0"]
+build-backend = "pdm.pep517.api"
