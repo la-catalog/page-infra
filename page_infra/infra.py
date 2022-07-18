@@ -34,7 +34,7 @@ class Infra:
 
         for marketplace in marketplace_options:
             infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
-            collection = mongo[infra.search_database][infra.search_collection]
+            collection = mongo[infra.database][infra.search_collection]
 
             # Temporary (while Motor doesn't support typing)
             collection: Collection
@@ -49,7 +49,7 @@ class Infra:
 
         for marketplace in marketplace_options:
             infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
-            collection = mongo[infra.sku_database][infra.sku_collection]
+            collection = mongo[infra.database][infra.sku_collection]
 
             # Temporary (while Motor doesn't support typing)
             collection: Collection
@@ -103,7 +103,7 @@ class Infra:
         """
         mongo = AsyncIOMotorClient(self._mongo_url)
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
-        collection = mongo[infra.search_database][infra.search_collection]
+        collection = mongo[infra.database][infra.search_collection]
 
         # Temporary (while Motor doesn't support typing)
         collection: Collection
@@ -151,14 +151,14 @@ class Infra:
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
-        database = mongo[infra.sku_database]
+        database = mongo[infra.database]
         collection = database[infra.sku_collection]
 
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
         self._logger.info(
-            event="Finish identify new URLs",
+            event="Finish identifying new URLs",
             urls_before=urls,
             urls_after=urls,  # TODO: change to new_urls after being implemented
             marketplace=marketplace,
@@ -175,7 +175,7 @@ class Infra:
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
-        database = mongo[infra.sku_database]
+        database = mongo[infra.database]
         collection = database[infra.sku_collection]
         codes = [sku.code for sku in skus if sku.code]
 
@@ -204,7 +204,7 @@ class Infra:
         stopwatch = Stopwatch()
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
-        database = mongo[infra.sku_database]
+        database = mongo[infra.database]
         collection = database[infra.sku_collection]
         documents = [sku.dict() for sku in skus]
 

@@ -13,9 +13,9 @@ class GoogleShopping(Marketplace):
         self.image_queue = "google_shopping_image"
 
         # Mongo
-        self.sku_database = "google_shopping"
+        self.database = "google_shopping"
+        self.url_collection = "urls"
         self.sku_collection = "skus"
-        self.search_database = "google_shopping"
         self.search_collection = "search"
 
         # Meilisearch

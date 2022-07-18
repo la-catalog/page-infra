@@ -13,9 +13,9 @@ class Rihappy(Marketplace):
         self.image_queue = "rihappy_image"
 
         # Mongo
-        self.sku_database = "rihappy"
+        self.database = "rihappy"
+        self.url_collection = "urls"
         self.sku_collection = "skus"
-        self.search_database = "rihappy"
         self.search_collection = "search"
 
         # Meilisearch

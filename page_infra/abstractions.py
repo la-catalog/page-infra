@@ -12,9 +12,9 @@ class Marketplace:
         self.image_queue = ""
 
         # Mongo
-        self.sku_database = ""
+        self.database = ""
+        self.url_collection = ""
         self.sku_collection = ""
-        self.search_database = ""
         self.search_collection = ""
 
         # Meilisearch
