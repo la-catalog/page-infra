@@ -188,7 +188,7 @@ class Infra:
         new_skus = [sku for sku in skus if sku.code in codes]
 
         self._logger.info(
-            event="Finish identify new SKUs",
+            event="Finish identifying new SKUs",
             skus_before=len(skus),
             skus_after=len(new_skus),
             marketplace=marketplace,
