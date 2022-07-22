@@ -12,7 +12,7 @@ keywords = [
     "amqp",
     "mongodb",
     "meilisearch",
-    "reids",
+    "redis",
 ]
 classifiers = [
     "Programming Language :: Python :: 3.10",
@@ -29,7 +29,7 @@ dependencies = [
 ]
 
 [project.urls]
-repository = "https://github.com/thiagola92/page-infra"
+repository = "https://github.com/la-catalog/page-infra"
 
 [tool.pdm]
 
