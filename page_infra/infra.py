@@ -3,11 +3,13 @@ from datetime import datetime, timedelta
 import meilisearch
 import redis.asyncio as redis
 from la_stopwatch import Stopwatch
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, Bul
 from page_models import SKU
+from pymongo import UpdateOne
 from pymongo.collection import Collection
 from pymongo.cursor import Cursor
 from pymongo.operations import IndexModel
+from pymongo.results import BulkWriteResult
 from structlog.stdlib import BoundLogger, get_logger
 
 from page_infra.options import get_marketplace_infra
@@ -158,7 +160,7 @@ class Infra:
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
-        yesterday = datetime.utcnow() - timedelta(days=1)
+        yesterday = datetime.utcnow() - timedelta(days=7)
         async for doc in collection.find({"url": {"$in": urls}}):
             if doc["accessed"] >= yesterday.isoformat():
                 urls.remove(doc["url"])
@@ -173,6 +175,7 @@ class Infra:
 
         return urls
 
+    # TODO: remove because we don't want to exclude skus updates
     async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[SKU]:
         """
         Identify the SKUs that are not in the database or didn't change.
@@ -214,16 +217,61 @@ class Infra:
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.database]
         collection = database[infra.sku_collection]
-        documents = [sku.dict() for sku in skus]
+        documents = []
 
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
+        for sku in skus:
+            upsert = sku.get_mongo_upsert()
+
+            documents.append(
+                UpdateOne(
+                    filter={"code": sku.code},
+                    update=upsert,
+                    upsert=True,
+                )
+            )
+
         if documents > 0:
-            await collection.insert_many(documents=documents)
+            result: BulkWriteResult = await collection.bulk_write(requests=documents)
+
+            print(result.bulk_api_result)
+            # TODO: for each update we need to save the snapshot
 
         self._logger.info(
             event="SKUs inserted",
+            quantity=len(skus),
+            marketplace=marketplace,
+            duration=str(stopwatch),
+        )
+
+    async def update_relatives(self, skus: list[SKU], marketplace: str) -> None:
+        if not skus:
+            return skus
+
+        stopwatch = Stopwatch()
+        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+        mongo = AsyncIOMotorClient(self._mongo_url)
+        database = mongo[infra.database]
+        collection = database[infra.sku_collection]
+
+        # Temporary (while Motor doesn't support typing)
+        collection: Collection
+
+        for sku in skus:
+            if sku.metadata.relatives:
+                relative = next(iter(sku.metadata.relatives))
+                sku_ = SKU(await collection.find_one({"code": relative}))
+                relatives = list(sku_.metadata.relatives | sku.metadata.relatives)
+                set_ = {f"metadata.{r}": True for r in relatives}
+
+                await collection.update_many(
+                    {"code": {"$in": relatives}}, {"$set": set_}
+                )
+
+        self._logger.info(
+            event="Relatives updated",
             quantity=len(skus),
             marketplace=marketplace,
             duration=str(stopwatch),
