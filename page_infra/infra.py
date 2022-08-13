@@ -5,7 +5,7 @@ import redis.asyncio as redis
 from la_stopwatch import Stopwatch
 from motor.motor_asyncio import AsyncIOMotorClient, Bul
 from page_models import SKU
-from pymongo import UpdateOne
+from pymongo import InsertOne, UpdateOne
 from pymongo.collection import Collection
 from pymongo.cursor import Cursor
 from pymongo.operations import IndexModel
@@ -52,6 +52,14 @@ class Infra:
 
             collection = mongo[infra.database][infra.sku_collection]
             index = IndexModel([("code", 1)], unique=True)
+            await collection.create_indexes([index])
+
+            collection = mongo[infra.database][infra.historic_collection]
+            index = IndexModel([("code", 1)], unique=True)
+            await collection.create_indexes([index])
+
+            collection = mongo[infra.database][infra.snapshot_collection]
+            index = IndexModel([("hash", 1)], unique=True)
             await collection.create_indexes([index])
 
     async def setup_catalog_database(self) -> None:
@@ -160,53 +168,24 @@ class Infra:
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
-        yesterday = datetime.utcnow() - timedelta(days=7)
-        async for doc in collection.find({"url": {"$in": urls}}):
-            if doc["accessed"] >= yesterday.isoformat():
-                urls.remove(doc["url"])
+        new_urls = urls.copy()
+        date = datetime.utcnow() - timedelta(days=7)
+        isoformat = date.isoformat()
+
+        async for doc in collection.find(
+            {"url": {"$in": urls}, "accessed": {"$lt": isoformat}}
+        ):
+            new_urls.remove(doc["url"])
 
         self._logger.info(
             event="Finish discarding old URLs",
             urls_before=urls,
-            urls_after=urls,  # TODO: change to new_urls after being implemented
+            urls_after=new_urls,
             marketplace=marketplace,
             duration=str(stopwatch),
         )
 
         return urls
-
-    # TODO: remove because we don't want to exclude skus updates
-    async def identify_new_skus(self, skus: list[SKU], marketplace: str) -> list[SKU]:
-        """
-        Identify the SKUs that are not in the database or didn't change.
-        """
-        if not skus:
-            return skus
-
-        stopwatch = Stopwatch()
-        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
-        mongo = AsyncIOMotorClient(self._mongo_url)
-        database = mongo[infra.database]
-        collection = database[infra.sku_collection]
-        codes = [sku.code for sku in skus if sku.code]
-
-        # Temporary (while Motor doesn't support typing)
-        collection: Collection
-
-        async for doc in collection.find({"code": {"$in": codes}}, {"code": 1}):
-            codes.remove(doc["code"])
-
-        new_skus = [sku for sku in skus if sku.code in codes]
-
-        self._logger.info(
-            event="Finish identifying new SKUs",
-            skus_before=len(skus),
-            skus_after=len(new_skus),
-            marketplace=marketplace,
-            duration=str(stopwatch),
-        )
-
-        return new_skus
 
     async def insert_skus(self, skus: list[SKU], marketplace: str) -> None:
         if not skus:
@@ -217,30 +196,120 @@ class Infra:
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.database]
         collection = database[infra.sku_collection]
-        documents = []
 
         # Temporary (while Motor doesn't support typing)
         collection: Collection
 
-        for sku in skus:
-            upsert = sku.get_mongo_upsert()
+        requests = []
 
-            documents.append(
+        for sku in skus:
+            doc = sku.dict()
+            created = doc["metadata"].pop("created")
+
+            requests.append(
                 UpdateOne(
                     filter={"code": sku.code},
-                    update=upsert,
+                    update={
+                        "$set": doc,
+                        "$setOnInsert": {"metadata.created": created},
+                    },
                     upsert=True,
                 )
             )
 
-        if documents > 0:
-            result: BulkWriteResult = await collection.bulk_write(requests=documents)
-
-            print(result.bulk_api_result)
-            # TODO: for each update we need to save the snapshot
+        if requests:
+            result: BulkWriteResult = await collection.bulk_write(
+                requests=requests, ordered=False
+            )
 
         self._logger.info(
             event="SKUs inserted",
+            quantity=len(skus),
+            marketplace=marketplace,
+            duration=str(stopwatch),
+        )
+
+    async def update_historics(self, skus: list[SKU], marketplace: str) -> None:
+        if not skus:
+            return skus
+
+        stopwatch = Stopwatch()
+        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+        mongo = AsyncIOMotorClient(self._mongo_url)
+        database = mongo[infra.database]
+        collection = database[infra.historic_collection]
+
+        # Temporary (while Motor doesn't support typing)
+        collection: Collection
+
+        requests = []
+
+        for sku in skus:
+            requests.append(
+                UpdateOne(
+                    filter={"code": sku.code},
+                    update={
+                        "$push": {
+                            "historic": {
+                                "$each": [
+                                    {
+                                        "created": sku.metadata.created,
+                                        "hash": sku.metadata.hash,
+                                    }
+                                ],
+                                "$position": 0,
+                            }
+                        }
+                    },
+                    upsert=True,
+                )
+            )
+
+        if requests:
+            result: BulkWriteResult = await collection.bulk_write(
+                requests=requests, ordered=False
+            )
+
+        self._logger.info(
+            event="Historics updated",
+            quantity=len(skus),
+            marketplace=marketplace,
+            duration=str(stopwatch),
+        )
+
+    async def insert_snapshots(self, skus: list[SKU], marketplace: str) -> None:
+        if not skus:
+            return skus
+
+        stopwatch = Stopwatch()
+        infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
+        mongo = AsyncIOMotorClient(self._mongo_url)
+        database = mongo[infra.database]
+        collection = database[infra.snapshot_collection]
+
+        # Temporary (while Motor doesn't support typing)
+        collection: Collection
+
+        requests = []
+
+        for sku in skus:
+            requests.append(
+                InsertOne(
+                    document={
+                        "hash": sku.metadata.hash,
+                        "created": sku.metadata.created,
+                        "sku": sku.get_core(),
+                    }
+                )
+            )
+
+        if requests:
+            result: BulkWriteResult = await collection.bulk_write(
+                requests=requests, ordered=False
+            )
+
+        self._logger.info(
+            event="Snapshots inserted",
             quantity=len(skus),
             marketplace=marketplace,
             duration=str(stopwatch),
@@ -264,7 +333,7 @@ class Infra:
                 relative = next(iter(sku.metadata.relatives))
                 sku_ = SKU(await collection.find_one({"code": relative}))
                 relatives = list(sku_.metadata.relatives | sku.metadata.relatives)
-                set_ = {f"metadata.{r}": True for r in relatives}
+                set_ = {f"metadata.relatives.{r}": True for r in relatives}
 
                 await collection.update_many(
                     {"code": {"$in": relatives}}, {"$set": set_}

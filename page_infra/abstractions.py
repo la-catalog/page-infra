@@ -16,6 +16,8 @@ class Marketplace:
         self.url_collection = ""
         self.sku_collection = ""
         self.search_collection = ""
+        self.historic_collection = ""
+        self.snapshot_collection = ""
 
         # Meilisearch
         self.catalog_index = ""
