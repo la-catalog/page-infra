@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import meilisearch
 import redis.asyncio as redis
 from la_stopwatch import Stopwatch
-from motor.motor_asyncio import AsyncIOMotorClient, Bul
+from motor.motor_asyncio import AsyncIOMotorClient
 from page_models import SKU
 from pymongo import InsertOne, UpdateOne
 from pymongo.collection import Collection
