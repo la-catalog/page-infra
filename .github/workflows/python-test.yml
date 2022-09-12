@@ -19,11 +19,8 @@ jobs:
       - run: pdm run black
       - run: pdm run isort
       - run: pdm run unittest
-      - run: |
-          if [ "$(git status --porcelain)" != "" ]
-          then
-            git config user.name actions
-            git config user.email actions@github.com
-            git commit -a -m "Workflow fix";
-            git push;
-          fi
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: Workflow fix
+          committer_name: actions
+          committer_email: actions@github.com
