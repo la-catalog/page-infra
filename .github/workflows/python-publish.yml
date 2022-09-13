@@ -6,7 +6,7 @@ on:
     types: [published]
 
 jobs:
-  deploy:
+  publish:
     runs-on: self-hosted
     steps:
       - run: curl -s https://install.zerotier.com | sudo bash
