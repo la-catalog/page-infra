@@ -1,6 +1,6 @@
 [[package]]
 name = "aio-pika"
-version = "8.2.1"
+version = "8.2.2"
 requires_python = ">3.6, <4"
 summary = "Wrapper for the aiormq for asyncio and humans."
 dependencies = [
@@ -36,6 +36,12 @@ dependencies = [
     "platformdirs>=2",
     "tomli>=1.1.0; python_full_version < \"3.11.0a7\"",
 ]
+
+[[package]]
+name = "camel-converter"
+version = "1.0.6"
+requires_python = ">=3.7,<4.0"
+summary = "Converts a string from snake case to camel case or camel case to snake case"
 
 [[package]]
 name = "certifi"
@@ -99,10 +105,11 @@ summary = "Measure the amount of time that elapses between lap times"
 
 [[package]]
 name = "meilisearch"
-version = "0.19.2"
+version = "0.20.0"
 requires_python = ">=3"
 summary = "The python client for Meilisearch API."
 dependencies = [
+    "camel-converter",
     "requests",
 ]
 
@@ -255,8 +262,9 @@ lock_version = "4.0"
 content_hash = "sha256:360f60512d5ce0c476ff301ceee1d5a5730d3c2025b68674a0cbcfdd9204003c"
 
 [metadata.files]
-"aio-pika 8.2.1" = [
-    {url = "https://files.pythonhosted.org/packages/96/e1/5035b9e668d5a341b2a3d94ff2f289cc4c1933dabcabca55c6659e532d4e/aio-pika-8.2.1.tar.gz", hash = "sha256:e6aa366526f4e03d1040757ee5104860186be91b10e0a82c3e610d8ecb55dd5b"},
+"aio-pika 8.2.2" = [
+    {url = "https://files.pythonhosted.org/packages/27/a3/149746c28ea706406dcc6cca95c410163e4543898008d021e437e8819675/aio_pika-8.2.2-py3-none-any.whl", hash = "sha256:0fe411be03f352389f0e12445f19e0c9e3a77ea03d334c33067239027387e0ba"},
+    {url = "https://files.pythonhosted.org/packages/d1/5b/b79d8ae87a5385fc993cc7d5f51d081855fb785e864f5ed07ef93ce5e83f/aio-pika-8.2.2.tar.gz", hash = "sha256:5b610a217f9aebd1773e6383f506da6df4e962ceaa3f3cf786fdbf669ce7b86f"},
 ]
 "aiormq 6.4.2" = [
     {url = "https://files.pythonhosted.org/packages/b7/93/cd671ea26f8f208bbcaf0fb0f3aa8a55e00ffc0a2f539d93c02919376932/aiormq-6.4.2-py3-none-any.whl", hash = "sha256:fdbf2efed73a2e07437de3af5e3591165efb155a18394dc7295cac9e80943c62"},
@@ -290,6 +298,10 @@ content_hash = "sha256:360f60512d5ce0c476ff301ceee1d5a5730d3c2025b68674a0cbcfdd9
     {url = "https://files.pythonhosted.org/packages/d5/08/2dbe5c8e5d251fad5b06494a113940232716246e973ca33a44e59b7f1dbd/black-22.8.0-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:cea1b2542d4e2c02c332e83150e41e3ca80dc0fb8de20df3c5e98e242156222c"},
     {url = "https://files.pythonhosted.org/packages/d5/0a/c86b68b24812deaceb48dc7e335fde0f1289e04171ef2fc5ff8eecc50102/black-22.8.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dd82842bb272297503cbec1a2600b6bfb338dae017186f8f215c8958f8acf869"},
     {url = "https://files.pythonhosted.org/packages/df/9f/1a01c38b187bf49ddf97872932c4ef4f87065e08b037efbe72f3f824970d/black-22.8.0-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:0a12e4e1353819af41df998b02c6742643cfef58282915f781d0e4dd7a200411"},
+]
+"camel-converter 1.0.6" = [
+    {url = "https://files.pythonhosted.org/packages/11/5d/0b26018db1d6f60d9cb92a43d7f8452c1104706f01ba4aa558bc7d9ea78c/camel_converter-1.0.6-py3-none-any.whl", hash = "sha256:8e752eb4c73b7cd94c45f74374fb4f6374286c80d60946002db998aae4349766"},
+    {url = "https://files.pythonhosted.org/packages/42/5f/ed461835df04d256b0070ea6b4a263e06987a60724744f958aaa205cd37b/camel-converter-1.0.6.tar.gz", hash = "sha256:e70c1f8b83b9c172270a6cd92f6cdcd8e30502923058fec07be71fb701e6ce95"},
 ]
 "certifi 2022.6.15" = [
     {url = "https://files.pythonhosted.org/packages/cc/85/319a8a684e8ac6d87a1193090e06b6bbb302717496380e225ee10487c888/certifi-2022.6.15.tar.gz", hash = "sha256:84c85a9078b11105f04f3036a9482ae10e4621616db313fe045dd24743a0820d"},
@@ -327,9 +339,9 @@ content_hash = "sha256:360f60512d5ce0c476ff301ceee1d5a5730d3c2025b68674a0cbcfdd9
     {url = "https://files.pythonhosted.org/packages/05/9b/523b5d9b1015e32f9bbc0a9cf1576de66a3e9ce57a6fe7e67f79d7faff95/la-stopwatch-0.0.9.tar.gz", hash = "sha256:f8b3f0e40bb97c0376561af40366bcf98d1090efe48338654b5729a671a25aa0"},
     {url = "https://files.pythonhosted.org/packages/5e/18/efdc736262b05204d73d3e4fb4a7eb8909ddf7f200389e7830d102ea8567/la_stopwatch-0.0.9-py3-none-any.whl", hash = "sha256:90d1e901556d8c4d0fd8dd48225f88e5cdd504b86a093ab6ab538d25db2d9ea1"},
 ]
-"meilisearch 0.19.2" = [
-    {url = "https://files.pythonhosted.org/packages/65/0b/cdc306597b4e006c172af8f359d604108f974e8b47e19f6b933886352959/meilisearch-0.19.2.tar.gz", hash = "sha256:319230a04894c3560a6bede8f1191ff89843a2d45bf545f086213b67965329d3"},
-    {url = "https://files.pythonhosted.org/packages/e6/ae/bc9aea357c7aa3a1898f9f4b65ca04ccc864f8f0e8cf18a4a4e31c684d28/meilisearch-0.19.2-py3-none-any.whl", hash = "sha256:0321db6a3b8b3843766236635b154911ae66153c07ab2676b64bdc96ccd40254"},
+"meilisearch 0.20.0" = [
+    {url = "https://files.pythonhosted.org/packages/5a/85/f7db12773070448c97e893613ae682a00433fd6a2c41a5d2b4e53d96e64c/meilisearch-0.20.0.tar.gz", hash = "sha256:2e80596cf1ccc594e1f4e2bd5c03028dcfb6aa8920c5745297861f39dec8b0a7"},
+    {url = "https://files.pythonhosted.org/packages/7d/b5/dbdd05f01de2ae716d941132f70c948d2a9687827303cc8fa9773a541680/meilisearch-0.20.0-py3-none-any.whl", hash = "sha256:9be0944e6d4629edb7c0f55ebda9057d110d97ce566283244f64edb8ef708329"},
 ]
 "motor 3.0.0" = [
     {url = "https://files.pythonhosted.org/packages/84/00/3865aec63ed89170d879a13928cdeb5e452f50e23fcc82955bed446053aa/motor-3.0.0-py3-none-any.whl", hash = "sha256:b076de44970f518177f0eeeda8b183f52eafa557775bfe3294e93bda18867a71"},
