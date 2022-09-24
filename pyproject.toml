@@ -7,18 +7,19 @@ authors = [
     {name = "thiagola92", email = "thiagola92@gmail.com"},
 ]
 dependencies = [
-    "aio-pika>=8.0.3",
-    "meilisearch>=0.19.0",
-    "motor>=3.0.0",
-    "redis>=4.3.4",
-    "structlog>=21.5.0",
-    "la-stopwatch>=0.0.8",
+    "aio-pika==8.2.2",
+    "meilisearch==0.20.0",
+    "motor==3.0.0",
+    "redis==4.3.4",
+    "structlog==22.1.0",
+    "la-stopwatch==0.0.9",
     "page-models @ git+https://github.com/la-catalog/page-models.git",
 ]
 
 [project.urls]
 repository = "https://github.com/la-catalog/page-infra"
 
+[project.optional-dependencies]
 [tool.pdm]
 
 [tool.pdm.scripts]
@@ -28,8 +29,8 @@ isort = "python -m isort -v --ac ."
 
 [tool.pdm.dev-dependencies]
 lint = [
-    "black",
-    "isort"
+    "black==22.8.0",
+    "isort==5.10.1",
 ]
 
 [build-system]

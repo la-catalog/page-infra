@@ -147,7 +147,7 @@ name = "page-models"
 version = "0.1.0"
 requires_python = ">=3.10"
 git = "https://github.com/la-catalog/page-models.git"
-revision = "2bb51cf242af412f8ce43579501b38e2fb7f2650"
+revision = "ade3e7706d3c97d9b9b418c52fd46211c8324b16"
 summary = ""
 dependencies = [
     "gtin>=1.3.1649173518",
@@ -259,7 +259,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:360f60512d5ce0c476ff301ceee1d5a5730d3c2025b68674a0cbcfdd9204003c"
+content_hash = "sha256:0f6e2533a27b82492cea595f7c62f3348c64c19eb70ee3959af9d3c960f4a579"
 
 [metadata.files]
 "aio-pika 8.2.2" = [
