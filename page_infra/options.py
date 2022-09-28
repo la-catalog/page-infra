@@ -14,11 +14,15 @@ options: dict[str, type[Marketplace]] = {
 
 
 def get_marketplace_infra(marketplace: str, logger: BoundLogger) -> Marketplace:
+    """Get the infrastructure information responsible for the marketplace."""
+
     try:
         new_logger = logger.bind(marketplace=marketplace)
         marketplace_class = options[marketplace]
         return marketplace_class(marketplace=marketplace, logger=new_logger)
     except KeyError as e:
+        valid = ", ".join(options.keys())
+
         raise UnknowMarketplaceError(
-            f"Marketplace '{marketplace}' is not defined in page_sender package"
+            f"Marketplace '{marketplace}' is not defined in page_sender package. Valid options: {valid}"
         ) from e
