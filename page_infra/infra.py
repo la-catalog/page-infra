@@ -62,6 +62,7 @@ class Infra:
             index = IndexModel([("hash", 1)], unique=True)
             await collection.create_indexes([index])
 
+    # TODO: move to catalog-infra package
     async def setup_catalog_database(self) -> None:
         """Make sure that catalog have settings"""
 
@@ -163,7 +164,7 @@ class Infra:
         infra = get_marketplace_infra(marketplace=marketplace, logger=self._logger)
         mongo = AsyncIOMotorClient(self._mongo_url)
         database = mongo[infra.database]
-        collection = database[infra.sku_collection]
+        collection = database[infra.url_collection]
 
         # Temporary (while Motor doesn't support typing)
         collection: Collection
@@ -204,8 +205,11 @@ class Infra:
 
         for sku in skus:
             doc = sku.dict()
+
+            # Only field that shouln't be changed if exist
             created = doc["metadata"].pop("created")
 
+            # TODO: discover what happens first ($set or $setOnInsert)
             requests.append(
                 UpdateOne(
                     filter={"code": sku.code},
