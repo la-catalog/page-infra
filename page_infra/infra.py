@@ -189,6 +189,17 @@ class Infra:
         return urls
 
     async def insert_skus(self, skus: list[SKU], marketplace: str) -> None:
+        """
+        Upsert SKU into collection.
+
+        It will update the SKU only if the hash doesn't match.
+        If it match, it will attempt to insert a new SKU
+        but will fail because "code" field is a unique index.
+
+        Note: This is great because bulk_write() with the paremeter "ordered"
+        as False, will ignore errors.
+        """
+
         if not skus:
             return skus
 
@@ -209,10 +220,12 @@ class Infra:
             # Only field that shouln't be changed if exist
             created = doc["metadata"].pop("created")
 
-            # TODO: discover what happens first ($set or $setOnInsert)
             requests.append(
                 UpdateOne(
-                    filter={"code": sku.code},
+                    filter={
+                        "code": sku.code,
+                        "metadata.hash": {"$not": sku.metadata.hash},
+                    },
                     update={
                         "$set": doc,
                         "$setOnInsert": {"metadata.created": created},
@@ -221,10 +234,7 @@ class Infra:
                 )
             )
 
-        if requests:
-            result: BulkWriteResult = await collection.bulk_write(
-                requests=requests, ordered=False
-            )
+        await collection.bulk_write(requests=requests, ordered=False)
 
         self._logger.info(
             event="SKUs inserted",
@@ -234,6 +244,19 @@ class Infra:
         )
 
     async def update_historics(self, skus: list[SKU], marketplace: str) -> None:
+        """
+        Upsert snapshot hash into collection.
+
+        The "historic" field is ordered from newest to oldest.
+
+        It will update the "historic" only if the first in array isn't the same
+        as the one being inserted. In case it is, it will attempt to insert a new document
+        but will fail because "code" field is a unique index.
+
+        Note: This is great because bulk_write() with the paremeter "ordered"
+        as False, will ignore errors.
+        """
+
         if not skus:
             return skus
 
@@ -251,7 +274,10 @@ class Infra:
         for sku in skus:
             requests.append(
                 UpdateOne(
-                    filter={"code": sku.code},
+                    filter={
+                        "code": sku.code,
+                        "historic": {"$first": {"hash": {"$not": sku.metadata.hash}}},
+                    },
                     update={
                         "$push": {
                             "historic": {
@@ -269,10 +295,7 @@ class Infra:
                 )
             )
 
-        if requests:
-            result: BulkWriteResult = await collection.bulk_write(
-                requests=requests, ordered=False
-            )
+        await collection.bulk_write(requests=requests, ordered=False)
 
         self._logger.info(
             event="Historics updated",
@@ -282,6 +305,22 @@ class Infra:
         )
 
     async def insert_snapshots(self, skus: list[SKU], marketplace: str) -> None:
+        """
+        Insert SKU snapshot into collection.
+
+        The hash field is unique, so attempting to insert the
+        same hash would fail.
+
+        Note: This is great because you will never have duplicated snapshots.
+
+        No error will be raised because bulk_write()
+        use the parameter "ordered" as False and it can't
+        guarantee that every operation will complete.
+
+        Note: This is perfect because now you don't have to filter
+        before inserting to prevent any error (one less request to database).
+        """
+
         if not skus:
             return skus
 
@@ -307,10 +346,7 @@ class Infra:
                 )
             )
 
-        if requests:
-            result: BulkWriteResult = await collection.bulk_write(
-                requests=requests, ordered=False
-            )
+        await collection.bulk_write(requests=requests, ordered=False)
 
         self._logger.info(
             event="Snapshots inserted",
@@ -320,6 +356,12 @@ class Infra:
         )
 
     async def update_relatives(self, skus: list[SKU], marketplace: str) -> None:
+        """
+        Update SKUs that are relatives to each other.
+
+        Whenever a SKU have one or more relatives, look at this relatives
+        to discover more relatives and update your and their relatives.
+        """
         if not skus:
             return skus
 
@@ -333,15 +375,16 @@ class Infra:
         collection: Collection
 
         for sku in skus:
-            if sku.metadata.relatives:
-                relative = next(iter(sku.metadata.relatives))
-                sku_ = SKU(await collection.find_one({"code": relative}))
-                relatives = list(sku_.metadata.relatives | sku.metadata.relatives)
-                set_ = {f"metadata.relatives.{r}": True for r in relatives}
+            for relative in sku.metadata.relatives:
+                if s := await collection.find_one({"code": relative}):
+                    relatives = list(SKU(s).metadata.relatives | sku.metadata.relatives)
+                    set_ = {f"metadata.relatives.{r}": True for r in relatives}
 
-                await collection.update_many(
-                    {"code": {"$in": relatives}}, {"$set": set_}
-                )
+                    # This will update this SKU relatives and
+                    # the database SKUs relatives.
+                    await collection.update_many(
+                        {"code": {"$in": relatives}}, {"$set": set_}
+                    )
 
         self._logger.info(
             event="Relatives updated",
