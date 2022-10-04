@@ -14,9 +14,6 @@ class MercadoLivre(Marketplace):
 
         # Mongo
         self.database = "mercado_livre"
-        self.url_collection = "urls"
-        self.sku_collection = "skus"
-        self.search_collection = "search"
 
         # Meilisearch
         self.catalog_index = "mercado_livre"

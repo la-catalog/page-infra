@@ -13,11 +13,11 @@ class Marketplace:
 
         # Mongo
         self.database = ""
-        self.url_collection = ""
-        self.sku_collection = ""
-        self.search_collection = ""
-        self.historic_collection = ""
-        self.snapshot_collection = ""
+        self.url_collection = "urls"
+        self.sku_collection = "skus"
+        self.historic_collection = "historics"
+        self.snapshot_collection = "snapshots"
+        self.search_collection = "searchs"
 
         # Meilisearch
         self.catalog_index = ""
