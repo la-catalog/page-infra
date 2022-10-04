@@ -147,7 +147,7 @@ name = "page-models"
 version = "0.1.0"
 requires_python = ">=3.10"
 git = "https://github.com/la-catalog/page-models.git"
-revision = "6402c4f428262f282942eaef65a2cb1b31001e8b"
+revision = "263129fb69bedbd24ddd71f27d110950f9ee9042"
 summary = ""
 dependencies = [
     "gtin==1.3.1649173518",
