@@ -2,14 +2,14 @@ name: Publish python package
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+  # release:
+  #   types: [published]
 
 jobs:
   publish:
     runs-on: self-hosted
     steps:
-      - run: curl -s https://install.zerotier.com | sudo bash
+      # - run: curl -s https://install.zerotier.com | sudo bash
       - uses: actions/checkout@v3
       - uses: pdm-project/setup-pdm@main
         with:
