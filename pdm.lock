@@ -91,6 +91,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "gtin"
+version = "1.3.1649173518"
+requires_python = "~=3.6"
+summary = "Parse GTINs (also known as UPC/EAN/JAN/ISBN)"
+
+[[package]]
 name = "idna"
 version = "3.3"
 requires_python = ">=3.5"
@@ -145,6 +151,17 @@ requires_python = ">=3.6"
 summary = "Core utilities for Python packages"
 dependencies = [
     "pyparsing!=3.0.5,>=2.0.2",
+]
+
+[[package]]
+name = "page-models"
+version = "0.1.0"
+requires_python = ">=3.10"
+summary = "UNKNOWN"
+dependencies = [
+    "gtin>=1.3.1649173518",
+    "motor>=3.0.0",
+    "pydantic>=1.9.1",
 ]
 
 [[package]]
@@ -251,7 +268,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:490c9cba13714bd949412c2604b45db56e01a003dbd6333a9d4afc235986436b"
+content_hash = "sha256:c01e49566f2e1ce9e046bdadfca8ad8e9b01d730ac2aedf1f4661feec2150503"
 
 [metadata.files]
 "aio-pika 8.2.4" = [
@@ -312,6 +329,10 @@ content_hash = "sha256:490c9cba13714bd949412c2604b45db56e01a003dbd6333a9d4afc235
 "deprecated 1.2.13" = [
     {url = "https://files.pythonhosted.org/packages/51/6a/c3a0408646408f7283b7bc550c30a32cc791181ec4618592eec13e066ce3/Deprecated-1.2.13-py2.py3-none-any.whl", hash = "sha256:64756e3e14c8c5eea9795d93c524551432a0be75629f8f29e67ab8caf076c76d"},
     {url = "https://files.pythonhosted.org/packages/c8/d1/e412abc2a358a6b9334250629565fe12697ca1cdee4826239eddf944ddd0/Deprecated-1.2.13.tar.gz", hash = "sha256:43ac5335da90c31c24ba028af536a91d41d53f9e6901ddb021bcc572ce44e38d"},
+]
+"gtin 1.3.1649173518" = [
+    {url = "https://files.pythonhosted.org/packages/17/ae/d1936a5487ffad5182c5ab904c673760046d64fb60ab555b730e6227e4c2/gtin-1.3.1649173518-py3-none-any.whl", hash = "sha256:b9abeb861ca99d20c0b232d0a15766690aba046d387f8ed364c87e34bd12af42"},
+    {url = "https://files.pythonhosted.org/packages/39/50/2c5f7e14b164023d1547df85f4b48c2e33de14cea673f546225269dc54a9/gtin-1.3.1649173518.tar.gz", hash = "sha256:95d36d5c006ba93ab12a1a9d1cfd42bc7719284751b1195c623d1e5d2c599a5f"},
 ]
 "idna 3.3" = [
     {url = "https://files.pythonhosted.org/packages/04/a2/d918dcd22354d8958fe113e1a3630137e0fc8b44859ade3063982eacd2a4/idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
