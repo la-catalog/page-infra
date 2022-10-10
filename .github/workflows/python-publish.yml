@@ -2,24 +2,29 @@ name: Publish python package
 
 on:
   workflow_dispatch:
-  # release:
-  #   types: [published]
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   publish:
     runs-on: self-hosted
+    env:
+      GITHUB_ORG: la-catalog
+      GITHUB_REPO: pypi
     steps:
-      # - run: curl -s https://install.zerotier.com | sudo bash
       - uses: actions/checkout@v3
+        with:
+          repository: '${{ env.GITHUB_ORG }}/${{ env.GITHUB_REPO }}'
+          token: ${{ secrets.gh_token }}
       - uses: pdm-project/setup-pdm@main
         with:
           python-version: "3.10"
           enable-pep582: true
       - run: pdm install
-      # - run: pdm publish --username __token__ --password ${{ secrets.PYPI_TOKEN }}
-      # old, use as reference
-      # - uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      #   with:
-      #     user: ${{ secrets.PYPI_USER }}
-      #     password: ${{ secrets.PYPI_PASSWORD }}
-      #     repository_url: http://${{ secrets.PYPI_ADDRESS }}:${{ secrets.PYPI_PORT }}/simple/
+      - run: pdm run python src/add.py ${{ github.event.repository.name }} ${{ github.ref_name }}
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: Workflow fix
+          committer_name: actions
+          committer_email: actions@github.com
