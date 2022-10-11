@@ -12,18 +12,26 @@ jobs:
       GITHUB_ORG: la-catalog
       GITHUB_REPO: pypi
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout PyPi repository
+        uses: actions/checkout@v3
         with:
           repository: '${{ env.GITHUB_ORG }}/${{ env.GITHUB_REPO }}'
           token: ${{ secrets.gh_token }}
-      - uses: pdm-project/setup-pdm@main
+
+      - name: Setup pdm
+        uses: pdm-project/setup-pdm@main
         with:
           python-version: "3.10"
           enable-pep582: true
-      - run: pdm install
-      - run: pdm run python src/add.py ${{ github.event.repository.name }} ${{ github.ref_name }}
-      - uses: EndBug/add-and-commit@v9
+
+      - name: Add package
+        run: |
+          pdm install
+          pdm run python src/add.py ${{ github.event.repository.name }} ${{ github.ref_name }}
+          
+      - name: Push changes
+        uses: EndBug/add-and-commit@v9
         with:
-          message: Workflow fix
+          message: Publish package
           committer_name: actions
           committer_email: actions@github.com
