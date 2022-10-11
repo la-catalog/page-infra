@@ -9,16 +9,24 @@ jobs:
   update:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
-      - uses: pdm-project/setup-pdm@main
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup pdm
+        uses: pdm-project/setup-pdm@main
         with:
           python-version: "3.10"
           enable-pep582: true
-      - run: pdm install
-      - run: pdm update --unconstrained --save-exact
-      - run: pdm run unittest
-      - uses: EndBug/add-and-commit@v9
+
+      - name: Update and test packages
+        run: |
+          pdm install
+          pdm update --unconstrained --save-exact
+          pdm run unittest
+      
+      - name: Push changes
+        uses: EndBug/add-and-commit@v9
         with:
-          message: Workflow fix
+          message: Update packages
           committer_name: actions
           committer_email: actions@github.com
