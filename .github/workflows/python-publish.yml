@@ -31,29 +31,20 @@ jobs:
           pdm plugin add pdm-version
           pdm version ${{ github.ref_name }}
 
-      - name: Push changes
+      - name: Push version update
         uses: EndBug/add-and-commit@v9
         with:
           message: Update version
-          committer_name: actions
-          committer_email: actions@github.com
+          default_author: github_actions
 
-      - name: Delete tag
-        run: git tag -d ${{ github.ref_name }}
-      
-      - name: Remove tag in Github
-        uses: EndBug/add-and-commit@v9
-        with:
-          push: 'origin :refs/tags/${{ github.ref_name }}'
-
-      - name: Create tag
+      - name: Replace tag
         run: |
-          git tag ${{ github.ref_name }}
-      
-      - name: Push tag change
-        uses: EndBug/add-and-commit@v9
-        with:
-          push: 'origin :refs/tags/${{ github.ref_name }}'
+          git push origin :refs/tags/${{ github.ref_name }}
+          git tag -f ${{ github.ref_name }}
+          git push origin ${{ github.ref_name }}
+          gh release edit ${{ github.ref_name }} --draft=false --repo=${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish:
     runs-on: self-hosted
     needs: update-version
