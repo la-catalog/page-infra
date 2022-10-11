@@ -10,17 +10,25 @@ jobs:
   test:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
-      - uses: pdm-project/setup-pdm@main
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup pdm
+        uses: pdm-project/setup-pdm@main
         with:
           python-version: "3.10"
           enable-pep582: true
-      - run: pdm install
-      - run: pdm run black
-      - run: pdm run isort
-      - run: pdm run unittest
-      - uses: EndBug/add-and-commit@v9
+
+      - name: Format and test code
+        run: |
+          pdm install
+          pdm run black
+          pdm run isort
+          pdm run unittest
+
+      - name: Push changes
+        uses: EndBug/add-and-commit@v9
         with:
-          message: Workflow fix
+          message: Format code
           committer_name: actions
           committer_email: actions@github.com
