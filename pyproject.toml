@@ -40,3 +40,10 @@ build-backend = "pdm.pep517.api"
 [[tool.pdm.source]]
 url = "https://la-catalog.github.io/pypi/simple/"
 name = "la-catalog"
+
+[[tool.pdm.source]]
+url = "https://pypi.org/simple"
+name = "pypi"
+
+[tool.pdm.resolution]
+respect-source-order = true
