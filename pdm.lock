@@ -116,7 +116,7 @@ summary = "Measure the amount of time that elapses between lap times"
 
 [[package]]
 name = "meilisearch"
-version = "0.22.0"
+version = "0.22.1"
 requires_python = ">=3"
 summary = "The python client for Meilisearch API."
 dependencies = [
@@ -267,7 +267,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:d94702c96f7268c34de58f0c7c6352e485c9b226fa39cb715c48b43cbc3090ed"
+content_hash = "sha256:e0b70a67e5bfd9f3eb26749d45fcdf8f36a8d2b8121a329503a4b51662f88aa4"
 
 [metadata.files]
 "aio-pika 8.2.4" = [
@@ -345,9 +345,9 @@ content_hash = "sha256:d94702c96f7268c34de58f0c7c6352e485c9b226fa39cb715c48b43cb
     {url = "https://files.pythonhosted.org/packages/05/9b/523b5d9b1015e32f9bbc0a9cf1576de66a3e9ce57a6fe7e67f79d7faff95/la-stopwatch-0.0.9.tar.gz", hash = "sha256:f8b3f0e40bb97c0376561af40366bcf98d1090efe48338654b5729a671a25aa0"},
     {url = "https://files.pythonhosted.org/packages/5e/18/efdc736262b05204d73d3e4fb4a7eb8909ddf7f200389e7830d102ea8567/la_stopwatch-0.0.9-py3-none-any.whl", hash = "sha256:90d1e901556d8c4d0fd8dd48225f88e5cdd504b86a093ab6ab538d25db2d9ea1"},
 ]
-"meilisearch 0.22.0" = [
-    {url = "https://files.pythonhosted.org/packages/b7/ae/86861d7fbf05969651a0169df5c2b6fcd475c1828d46cef8295479a06578/meilisearch-0.22.0.tar.gz", hash = "sha256:5f0aa41ef66d7d68aa4b542d979c762e1122fe9a1d7cc8e502ce66d3147c1172"},
-    {url = "https://files.pythonhosted.org/packages/e9/0b/379543001d535b8d416ef7ebc07beaffd3814a597e9dac31c188889e0fb3/meilisearch-0.22.0-py3-none-any.whl", hash = "sha256:ba3c849cbd20d381c845cf7cc29daef062523268eba168f815f085e64bec1372"},
+"meilisearch 0.22.1" = [
+    {url = "https://files.pythonhosted.org/packages/85/06/48e26acab7a39be75e9b7f7b5f95c91e3e809d3439ace751893a41979b39/meilisearch-0.22.1-py3-none-any.whl", hash = "sha256:868d43d5af12e57c45c59e138e63c0e3a3a1bfbce38c0ee71f1d817f2d2fc2f1"},
+    {url = "https://files.pythonhosted.org/packages/8f/6f/8029d3c9f791f1d9f6b46ed2cb9cfa274d579418e541f640d14c12626361/meilisearch-0.22.1.tar.gz", hash = "sha256:81b703c0525ac670153585f6f2f93fce0f99f533e530c26a11ed204fae801670"},
 ]
 "motor 3.0.0" = [
     {url = "https://files.pythonhosted.org/packages/84/00/3865aec63ed89170d879a13928cdeb5e452f50e23fcc82955bed446053aa/motor-3.0.0-py3-none-any.whl", hash = "sha256:b076de44970f518177f0eeeda8b183f52eafa557775bfe3294e93bda18867a71"},

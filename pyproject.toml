@@ -8,12 +8,12 @@ authors = [
 ]
 dependencies = [
     "aio-pika==8.2.4",
-    "meilisearch==0.22.0",
+    "meilisearch==0.22.1",
     "motor==3.0.0",
     "redis==4.3.4",
     "structlog==22.1.0",
     "la-stopwatch==0.0.9",
-    "page-models>=0.1.0",
+    "page-models==0.1.0",
 ]
 
 [project.urls]
