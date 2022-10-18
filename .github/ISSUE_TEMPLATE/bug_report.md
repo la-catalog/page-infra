@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Criar um relatório de bug.
+about: Criar um relatório sobre algo que não deveria estar ocorrendo
 title: ''
 labels: bug
 assignees: ''
@@ -22,16 +22,16 @@ Lista dos passos para conseguir reproduzir o bug. Exemplo:
 ## Expected behavior
 Comportamento esperado ao invés do bug.
 
-## Screenshots/Screencasts
-Se desejado, imagens ou videos que ajudem a explicar o bug.
+## Screenshots/Screencasts (optional)
+Imagens ou videos que ajudem a explicar o bug.
 
-## Environment
-Descrição sobre o ambiente utilizado quando o bug ocorrer. Exemplos:
+## Environment (optional)
+Descrição sobre o ambiente utilizado quando o bug ocorreu. Exemplos:
 - Plataforma: Computador / Celular
 - Sistema operacional: Windows / Ubuntu / macOS / Android / iOS
 - Versão do sistema operacional: 10 / 22.04 / 13
 - Navegador: Google chrome / Firefox / Safari / Brave / Opera
 - Versão do navegador: 103.3 / 99.5
 
-## Additional context
+## Additional context (optional)
 Qualquer informação adicional que queira compartilhar sobre o bug.
