@@ -16,8 +16,8 @@ Liste os benefícios que está feature traz. Exemplos:
 - Acelera o processo do usuário
 - Automatiza a tarefa
 
-## Draws / Screenshots / Screencasts
-Se desejado, desenho/imagens/videos que ajudem a descrever a feature.
+## Draws/Screenshots/Screencasts (optional)
+Desenhos, imagens ou videos que ajudem a descrever a feature.
 
-## Additional context
+## Additional context (optional)
 Qualquer informação adicional que queira compartilhar sobre a feature.
