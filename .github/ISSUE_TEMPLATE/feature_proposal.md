@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Feature explanation
-Explicação longa da funcionalidade.
+Explicação da funcionalidade.
 
 ## Improvements
 Liste os benefícios que vai trazer. Exemplos:
@@ -19,5 +19,5 @@ Liste os benefícios que vai trazer. Exemplos:
 ## Draws/Screenshots/Screencasts (optional)
 Desenhos, imagens ou videos que ajudem a descrever a funcionalidade.
 
-## Additional context (optional)
+## Additional information (optional)
 Qualquer informação adicional que queira compartilhar sobre a funcionalidade.
