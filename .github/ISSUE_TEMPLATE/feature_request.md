@@ -1,23 +1,23 @@
 ---
-name: Feature request
-about: Criar uma sugestão de melhoria
+name: Feature proposal
+about: Algo novo que pode ser implementado
 title: ''
-labels: enhancement
+labels: feature
 assignees: ''
 
 ---
 
-## Feature
-Descrição da feature de maneira simples.
+## Feature explanation
+Explicação longa da funcionalidade.
 
 ## Improvements
-Liste os benefícios que está feature traz. Exemplos:
+Liste os benefícios que vai trazer. Exemplos:
 - Fácilita acessibilidade
 - Acelera o processo do usuário
 - Automatiza a tarefa
 
 ## Draws/Screenshots/Screencasts (optional)
-Desenhos, imagens ou videos que ajudem a descrever a feature.
+Desenhos, imagens ou videos que ajudem a descrever a funcionalidade.
 
 ## Additional context (optional)
-Qualquer informação adicional que queira compartilhar sobre a feature.
+Qualquer informação adicional que queira compartilhar sobre a funcionalidade.
