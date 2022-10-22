@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Bug explanation
-Explicação longa do erro.
+Explicação do erro.
 
 ## Expected behavior
 Comportamento esperado ao invés do erro.
@@ -30,5 +30,5 @@ Descrição sobre o ambiente utilizado quando o erro ocorreu. Exemplos:
 - Navegador: Google chrome / Firefox / Safari / Brave / Opera
 - Versão do navegador: 103.3 / 99.5
 
-## Additional context (optional)
+## Additional information (optional)
 Qualquer informação adicional que queira compartilhar sobre o erro.
