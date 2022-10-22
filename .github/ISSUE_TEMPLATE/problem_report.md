@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Problem explanation
-Explicação longa do problema.
+Explicação do problema.
 
 ## Problem solved
 Condição para que o problema seja dado como resolvido.
@@ -16,5 +16,5 @@ Condição para que o problema seja dado como resolvido.
 ## Draws/Screenshots/Screencasts (optional)
 Desenhos, imagens ou videos que ajudem a descrever o problema.
 
-## Additional context (optional)
+## Additional information (optional)
 Qualquer informação adicional que queira compartilhar sobre o problema.
