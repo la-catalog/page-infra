@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Enhancement explanation
-Explicação longa da melhoria.
+Explicação da melhoria.
 
 ## Improvements
 Liste os benefícios. Exemplos:
@@ -19,5 +19,5 @@ Liste os benefícios. Exemplos:
 ## Draws/Screenshots/Screencasts (optional)
 Desenhos, imagens ou videos que ajudem a descrever a melhoria.
 
-## Additional context (optional)
+## Additional information (optional)
 Qualquer informação adicional que queira compartilhar sobre a melhoria.
