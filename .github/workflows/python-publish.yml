@@ -20,7 +20,7 @@ jobs:
           ref: main
 
       - name: Setup pdm
-        uses: pdm-project/setup-pdm@main
+        uses: pdm-project/setup-pdm@v2.7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           enable-pep582: true
