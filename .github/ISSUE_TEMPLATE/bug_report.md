@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: ⚠️ Bug report
 about: Algo que funcionava quebrou
 title: ''
 labels: bug
