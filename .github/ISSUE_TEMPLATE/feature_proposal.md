@@ -1,5 +1,5 @@
 ---
-name: Feature proposal
+name: 🚀 Feature proposal
 about: Algo novo que pode ser implementado
 title: ''
 labels: feature
