@@ -1,5 +1,5 @@
 ---
-name: Clean proposal
+name: 🧼 Clean proposal
 about: Algum texto que pode ser reescrito
 title: ''
 labels: clean
