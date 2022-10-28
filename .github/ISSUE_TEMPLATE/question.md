@@ -1,5 +1,5 @@
 ---
-name: Question
+name: ❓ Question
 about: Alguma pergunta
 title: ''
 labels: question
