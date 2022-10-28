@@ -1,5 +1,5 @@
 ---
-name: Enhancement proposal
+name: 💎 Enhancement proposal
 about: Algo que funciona pode ser melhorado
 title: ''
 labels: enhancement
