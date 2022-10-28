@@ -1,5 +1,5 @@
 ---
-name: Problem report
+name: 🚩 Problem report
 about: Algo que não sabemos como resolver
 title: ''
 labels: problem
