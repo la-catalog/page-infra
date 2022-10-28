@@ -1,5 +1,5 @@
 ---
-name: Refactor proposal
+name: ♻️ Refactor proposal
 about: Algum código que pode ser reescrito
 title: ''
 labels: refactor
