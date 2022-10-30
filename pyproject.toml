@@ -9,7 +9,7 @@ authors = [
 dependencies = [
     "aio-pika==8.2.4",
     "meilisearch==0.22.1",
-    "motor==3.0.0",
+    "motor==3.1.1",
     "redis==4.3.4",
     "structlog==22.1.0",
     "la-stopwatch==0.0.9",

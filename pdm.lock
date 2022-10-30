@@ -126,7 +126,7 @@ dependencies = [
 
 [[package]]
 name = "motor"
-version = "3.0.0"
+version = "3.1.1"
 requires_python = ">=3.7"
 summary = "Non-blocking MongoDB driver for Tornado or asyncio"
 dependencies = [
@@ -267,7 +267,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:e0b70a67e5bfd9f3eb26749d45fcdf8f36a8d2b8121a329503a4b51662f88aa4"
+content_hash = "sha256:ec49af879f5bf8ef43fc4ea8fb62533835c63d3fc6aa375afabaa3dcf196363a"
 
 [metadata.files]
 "aio-pika 8.2.4" = [
@@ -349,9 +349,9 @@ content_hash = "sha256:e0b70a67e5bfd9f3eb26749d45fcdf8f36a8d2b8121a329503a4b5166
     {url = "https://files.pythonhosted.org/packages/85/06/48e26acab7a39be75e9b7f7b5f95c91e3e809d3439ace751893a41979b39/meilisearch-0.22.1-py3-none-any.whl", hash = "sha256:868d43d5af12e57c45c59e138e63c0e3a3a1bfbce38c0ee71f1d817f2d2fc2f1"},
     {url = "https://files.pythonhosted.org/packages/8f/6f/8029d3c9f791f1d9f6b46ed2cb9cfa274d579418e541f640d14c12626361/meilisearch-0.22.1.tar.gz", hash = "sha256:81b703c0525ac670153585f6f2f93fce0f99f533e530c26a11ed204fae801670"},
 ]
-"motor 3.0.0" = [
-    {url = "https://files.pythonhosted.org/packages/84/00/3865aec63ed89170d879a13928cdeb5e452f50e23fcc82955bed446053aa/motor-3.0.0-py3-none-any.whl", hash = "sha256:b076de44970f518177f0eeeda8b183f52eafa557775bfe3294e93bda18867a71"},
-    {url = "https://files.pythonhosted.org/packages/fb/f5/7d7aff183c727bf3c69dd487a14bed2eb8603f267354048641df74761e0a/motor-3.0.0.tar.gz", hash = "sha256:3e36d29406c151b61342e6a8fa5e90c00c4723b76e30f11276a4373ea2064b7d"},
+"motor 3.1.1" = [
+    {url = "https://files.pythonhosted.org/packages/30/e4/1402c74569bdfb866460cd93d56e6a2966f20d87253ae3ac24782ea704af/motor-3.1.1.tar.gz", hash = "sha256:a4bdadf8a08ebb186ba16e557ba432aa867f689a42b80f2e9f8b24bbb1604742"},
+    {url = "https://files.pythonhosted.org/packages/93/99/f97a0d543488e7d6ec47a6486734ed5827636466ec66b89ce7a3c59925dd/motor-3.1.1-py3-none-any.whl", hash = "sha256:01d93d7c512810dcd85f4d634a7244ba42ff6be7340c869791fe793561e734da"},
 ]
 "multidict 6.0.2" = [
     {url = "https://files.pythonhosted.org/packages/00/6f/05e5612827715de18f36a8e36fb373f58621927691213cc3f88dc24524b3/multidict-6.0.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:07a017cfa00c9890011628eab2503bee5872f27144936a52eaab449be5eaf032"},
