@@ -155,7 +155,7 @@ dependencies = [
 
 [[package]]
 name = "page-models"
-version = "0.1.0"
+version = "0.2.0"
 requires_python = ">=3.10"
 summary = ""
 dependencies = [
@@ -267,7 +267,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:ec49af879f5bf8ef43fc4ea8fb62533835c63d3fc6aa375afabaa3dcf196363a"
+content_hash = "sha256:38a50d2eb706dc70321e8a3b90e9c6136eaedd58a65503b3401923d0f68e8829"
 
 [metadata.files]
 "aio-pika 8.2.4" = [
