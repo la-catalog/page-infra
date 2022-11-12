@@ -64,7 +64,7 @@ jobs:
       - name: Add package
         run: |
           pdm install
-          pdm run python src/add.py ${{ github.event.repository.name }} ${{ github.ref_name }}
+          pdm run python src/add.py ${{ env.GITHUB_ORG }} ${{ github.event.repository.name }} ${{ github.ref_name }}
           
       - name: Push changes
         uses: EndBug/add-and-commit@v9
