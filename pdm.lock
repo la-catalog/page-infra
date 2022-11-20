@@ -1,6 +1,6 @@
 [[package]]
 name = "aio-pika"
-version = "8.2.4"
+version = "8.2.5"
 requires_python = ">3.6, <4"
 summary = "Wrapper for the aiormq for asyncio and humans."
 dependencies = [
@@ -116,8 +116,8 @@ summary = "Measure the amount of time that elapses between lap times"
 
 [[package]]
 name = "meilisearch"
-version = "0.22.1"
-requires_python = ">=3"
+version = "0.22.2"
+requires_python = ">=3.7"
 summary = "The python client for Meilisearch API."
 dependencies = [
     "camel-converter[pydantic]",
@@ -155,7 +155,7 @@ dependencies = [
 
 [[package]]
 name = "page-models"
-version = "0.2.0"
+version = "0.2.1"
 requires_python = ">=3.10"
 summary = ""
 dependencies = [
@@ -227,7 +227,7 @@ dependencies = [
 
 [[package]]
 name = "structlog"
-version = "22.1.0"
+version = "22.2.0"
 requires_python = ">=3.7"
 summary = "Structured Logging for Python"
 
@@ -267,12 +267,12 @@ dependencies = [
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:38a50d2eb706dc70321e8a3b90e9c6136eaedd58a65503b3401923d0f68e8829"
+content_hash = "sha256:b67b4a2fb47a09355fd36b35a39231874174dd1d5e2bfd42461ef1d1a51d2171"
 
 [metadata.files]
-"aio-pika 8.2.4" = [
-    {url = "https://files.pythonhosted.org/packages/04/12/26955aa09742a3fc1a7a4996b214728a7735b4cb1dff96d9127418bfd197/aio_pika-8.2.4-py3-none-any.whl", hash = "sha256:997e74efab11c34f37ff20e91316a4d7f5d3ae13167e3adec809aac09c7b84aa"},
-    {url = "https://files.pythonhosted.org/packages/b9/99/cb8a42122531a5c2fbc78f9e8b66eceee73a5959f8caec2e7e38b3a57802/aio-pika-8.2.4.tar.gz", hash = "sha256:71f0a67cc45bdd0e6b64121f2eda8462937a2d83266855a55d7d8c106c14d3d6"},
+"aio-pika 8.2.5" = [
+    {url = "https://files.pythonhosted.org/packages/23/d4/6f701d0c1cb44245f6c1f6af41d07db87838701e4353dc29be06a252fd78/aio-pika-8.2.5.tar.gz", hash = "sha256:80b7d9f60e6d3970fc1285bf0a40600270a7488d966f916e7f2f750f73063fa1"},
+    {url = "https://files.pythonhosted.org/packages/95/c6/cdc838baac8618a1933f5cd36e1908de74b6fbc0b5cafed83d07b20b7782/aio_pika-8.2.5-py3-none-any.whl", hash = "sha256:8584c2220af28ebed2339b233d303e98f6a8f105d761a57b5c20a79ae184751a"},
 ]
 "aiormq 6.4.2" = [
     {url = "https://files.pythonhosted.org/packages/b7/93/cd671ea26f8f208bbcaf0fb0f3aa8a55e00ffc0a2f539d93c02919376932/aiormq-6.4.2-py3-none-any.whl", hash = "sha256:fdbf2efed73a2e07437de3af5e3591165efb155a18394dc7295cac9e80943c62"},
@@ -345,9 +345,9 @@ content_hash = "sha256:38a50d2eb706dc70321e8a3b90e9c6136eaedd58a65503b3401923d0f
     {url = "https://files.pythonhosted.org/packages/05/9b/523b5d9b1015e32f9bbc0a9cf1576de66a3e9ce57a6fe7e67f79d7faff95/la-stopwatch-0.0.9.tar.gz", hash = "sha256:f8b3f0e40bb97c0376561af40366bcf98d1090efe48338654b5729a671a25aa0"},
     {url = "https://files.pythonhosted.org/packages/5e/18/efdc736262b05204d73d3e4fb4a7eb8909ddf7f200389e7830d102ea8567/la_stopwatch-0.0.9-py3-none-any.whl", hash = "sha256:90d1e901556d8c4d0fd8dd48225f88e5cdd504b86a093ab6ab538d25db2d9ea1"},
 ]
-"meilisearch 0.22.1" = [
-    {url = "https://files.pythonhosted.org/packages/85/06/48e26acab7a39be75e9b7f7b5f95c91e3e809d3439ace751893a41979b39/meilisearch-0.22.1-py3-none-any.whl", hash = "sha256:868d43d5af12e57c45c59e138e63c0e3a3a1bfbce38c0ee71f1d817f2d2fc2f1"},
-    {url = "https://files.pythonhosted.org/packages/8f/6f/8029d3c9f791f1d9f6b46ed2cb9cfa274d579418e541f640d14c12626361/meilisearch-0.22.1.tar.gz", hash = "sha256:81b703c0525ac670153585f6f2f93fce0f99f533e530c26a11ed204fae801670"},
+"meilisearch 0.22.2" = [
+    {url = "https://files.pythonhosted.org/packages/46/93/7edbfe5367cb7bbc01aab31556c84a5c874ca8eadcff27977539e6c12602/meilisearch-0.22.2.tar.gz", hash = "sha256:f887a3f0bffed7b7ed13ccd7ee786309a2de8fad729575072f5e311a367ecaa4"},
+    {url = "https://files.pythonhosted.org/packages/e0/8f/8519caeb45c955c4f0420a2a8618763d2b7ae8e8dd510a054021611f7fd2/meilisearch-0.22.2-py3-none-any.whl", hash = "sha256:fb8f0749651a95c9c898eba98f971825e8d10900b546ec33a7d6f3b4b7a90ba5"},
 ]
 "motor 3.1.1" = [
     {url = "https://files.pythonhosted.org/packages/30/e4/1402c74569bdfb866460cd93d56e6a2966f20d87253ae3ac24782ea704af/motor-3.1.1.tar.gz", hash = "sha256:a4bdadf8a08ebb186ba16e557ba432aa867f689a42b80f2e9f8b24bbb1604742"},
@@ -569,9 +569,9 @@ content_hash = "sha256:38a50d2eb706dc70321e8a3b90e9c6136eaedd58a65503b3401923d0f
     {url = "https://files.pythonhosted.org/packages/a5/61/a867851fd5ab77277495a8709ddda0861b28163c4613b011bc00228cc724/requests-2.28.1.tar.gz", hash = "sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983"},
     {url = "https://files.pythonhosted.org/packages/ca/91/6d9b8ccacd0412c08820f72cebaa4f0c0441b5cda699c90f618b6f8a1b42/requests-2.28.1-py3-none-any.whl", hash = "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"},
 ]
-"structlog 22.1.0" = [
-    {url = "https://files.pythonhosted.org/packages/2b/d4/359d0313ba3e7080cc943b515640b9e301f51abf196008c83c765d939df5/structlog-22.1.0.tar.gz", hash = "sha256:94b29b1d62b2659db154f67a9379ec1770183933d6115d21f21aa25cfc9a7393"},
-    {url = "https://files.pythonhosted.org/packages/fb/22/9748093e3a26729cc9d4f1dc4ffafaf43917377884b8eb7fce57ae9d06e9/structlog-22.1.0-py3-none-any.whl", hash = "sha256:760d37b8839bd4fe1747bed7b80f7f4de160078405f4b6a1db9270ccbfce6c30"},
+"structlog 22.2.0" = [
+    {url = "https://files.pythonhosted.org/packages/18/c3/ab9d0d5d2d792a4a954b2449cdb88b7a5dadc063985ad5e720b0348db612/structlog-22.2.0-py3-none-any.whl", hash = "sha256:bb1aa189214c30372a8afaa592f9556756aeb690e1ad7eb34391d7b5fa0f09b2"},
+    {url = "https://files.pythonhosted.org/packages/4d/7b/54c4fb8063d8f1e81b17c792fefd244a205210fc5742a08daa905482227b/structlog-22.2.0.tar.gz", hash = "sha256:4edfe1d9f15f8a4bf365a817f7182af5d610596c155434b7564bfe7d40c2753c"},
 ]
 "tomli 2.0.1" = [
     {url = "https://files.pythonhosted.org/packages/97/75/10a9ebee3fd790d20926a90a2547f0bf78f371b2f13aa822c759680ca7b9/tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
