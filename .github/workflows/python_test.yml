@@ -29,6 +29,14 @@ jobs:
           pdm run isort
           pdm run unittest
 
+      - name: Scan for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.ref_name }}
+          head: HEAD
+          extra_args: --debug --only-verified
+
       - name: Push changes
         uses: EndBug/add-and-commit@v9
         with:
