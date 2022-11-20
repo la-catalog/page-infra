@@ -31,6 +31,14 @@ jobs:
           pdm plugin add pdm-version
           pdm version ${{ github.ref_name }}
 
+      - name: Scan for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.ref_name }}
+          head: HEAD
+          extra_args: --debug --only-verified --fail
+
       - name: Push version update
         uses: EndBug/add-and-commit@v9
         with:
