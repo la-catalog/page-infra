@@ -35,7 +35,7 @@ jobs:
           path: ./
           base: ${{ github.ref_name }}
           head: HEAD
-          extra_args: --debug --only-verified
+          extra_args: --debug --only-verified --fail
 
       - name: Push changes
         uses: EndBug/add-and-commit@v9
