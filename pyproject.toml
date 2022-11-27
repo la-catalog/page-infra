@@ -10,8 +10,8 @@ dependencies = [
     "aio-pika==8.2.5",
     "meilisearch==0.22.2",
     "motor==3.1.1",
-    "redis==4.3.4",
-    "structlog==22.2.0",
+    "redis==4.3.5",
+    "structlog==22.3.0",
     "la-stopwatch==0.0.9",
     "page-models==0.2.1",
 ]
