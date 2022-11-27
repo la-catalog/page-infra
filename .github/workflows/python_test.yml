@@ -7,5 +7,5 @@ on:
     branches: [main]
 
 jobs:
-  format:
+  reusable:
     uses: la-catalog/github-actions/.github/workflows/python_test.yml@main
