@@ -6,5 +6,5 @@ on:
     - cron: '0 0 * * 0'
 
 jobs:
-  format:
+  reusable:
     uses: la-catalog/github-actions/.github/workflows/python_update.yml@main
