@@ -122,8 +122,8 @@ class Infra:
 
         This is important when many SKUs have the URL for the same SKU.
         For example,
-            When scraping A we discovered the URL for B
-            And when scraping C we also discovered the URL for B
+            When scraping A we may discover an URL for B
+            And when scraping C we may discover the URL for B again
 
         We don't want to scrap B two times, that's why we check
         on redis if have being scraped in the last X seconds.
