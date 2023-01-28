@@ -2,18 +2,18 @@
 name = "page-infra"
 version = "0.1.0"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [
     {name = "thiagola92", email = "thiagola92@gmail.com"},
 ]
 dependencies = [
-    "aio-pika>=8.3.0",
-    "meilisearch>=0.23.0",
-    "motor>=3.1.1",
-    "redis>=4.4.2",
-    "structlog>=22.3.0",
-    "la-stopwatch>=0.0.9",
-    "page-models>=0.2.1",
+    "aio-pika==8.3.0",
+    "meilisearch==0.23.0",
+    "motor==3.1.1",
+    "redis==4.4.2",
+    "structlog==22.3.0",
+    "la-stopwatch==0.0.9",
+    "page-models==0.2.2",
 ]
 
 [project.urls]
@@ -29,8 +29,8 @@ isort = "python -m isort -v --ac --profile black ."
 
 [tool.pdm.dev-dependencies]
 lint = [
-    "black==22.10.0",
-    "isort==5.10.1",
+    "black==22.12.0",
+    "isort==5.12.0",
 ]
 
 [build-system]
