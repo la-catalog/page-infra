@@ -8,3 +8,5 @@ on:
 jobs:
   reusable:
     uses: la-catalog/github-actions/.github/workflows/python_publish.yml@main
+    secrets:
+      gh_token: ${{ secrets.gh_token }}
