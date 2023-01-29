@@ -3,14 +3,13 @@ from datetime import datetime, timedelta
 import meilisearch
 import redis.asyncio as redis
 from la_stopwatch import Stopwatch
+from logger_utility import WritePoint
 from motor.motor_asyncio import AsyncIOMotorClient
 from page_models import SKU
 from pymongo import InsertOne, UpdateOne
 from pymongo.collection import Collection
 from pymongo.cursor import Cursor
 from pymongo.operations import IndexModel
-from pymongo.results import BulkWriteResult
-from structlog.stdlib import BoundLogger, get_logger
 
 from page_infra.options import get_marketplace_infra
 from page_infra.options import options as marketplace_options
@@ -19,17 +18,17 @@ from page_infra.options import options as marketplace_options
 class Infra:
     def __init__(
         self,
-        redis_url: str | None = None,
-        mongo_url: str | None = None,
-        meilisearch_url: str | None = None,
-        meilisearch_key: str | None = None,
-        logger: BoundLogger = get_logger(),
+        redis_url: str,
+        mongo_url: str,
+        meilisearch_url: str,
+        meilisearch_key: str,
+        logger: WritePoint,
     ):
-        self._logger = logger.bind(lib="page_infra")
         self._redis_url = redis_url
         self._mongo_url = mongo_url
         self._meilisearch_url = meilisearch_url
         self._meilisearch_key = meilisearch_key
+        self._logger = logger.copy().tag("package", "page_infra")
 
     async def setup_databases(self) -> None:
         """Make sure that collections exists and have indexes"""
