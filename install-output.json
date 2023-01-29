@@ -1,0 +1,6 @@
+{
+  "pdm_version": "2.4.1",
+  "pdm_bin": "/home/thiagola92/.local/bin/pdm",
+  "install_python_version": "3.11.0",
+  "install_location": "/home/thiagola92/.local/share/pdm/venv"
+}
