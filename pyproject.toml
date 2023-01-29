@@ -14,6 +14,7 @@ dependencies = [
     "structlog==22.3.0",
     "la-stopwatch==0.0.9",
     "page-models==0.2.2",
+    "logger-utility==0.1.1",
 ]
 
 [project.urls]
