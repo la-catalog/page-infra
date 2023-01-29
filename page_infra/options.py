@@ -1,28 +1,24 @@
-from structlog.stdlib import BoundLogger
+from logger_utility import WritePoint
 
 from page_infra.abstractions import Marketplace
 from page_infra.exceptions import UnknowMarketplaceError
-from page_infra.marketplaces.google_shopping import GoogleShopping
-from page_infra.marketplaces.mercado_livre import MercadoLivre
-from page_infra.marketplaces.rihappy import Rihappy
 
 options: dict[str, type[Marketplace]] = {
-    "google_shopping": GoogleShopping,
-    "rihappy": Rihappy,
-    "mercado_livre": MercadoLivre,
+    "google_shopping": Marketplace,
+    "rihappy": Marketplace,
+    "mercado_livre": Marketplace,
 }
 
 
-def get_marketplace_infra(marketplace: str, logger: BoundLogger) -> Marketplace:
+def get_marketplace_infra(marketplace: str, logger: WritePoint) -> Marketplace:
     """Get the infrastructure information responsible for the marketplace."""
 
     try:
-        new_logger = logger.bind(marketplace=marketplace)
         marketplace_class = options[marketplace]
-        return marketplace_class(marketplace=marketplace, logger=new_logger)
+        return marketplace_class(marketplace=marketplace, logger=logger)
     except KeyError as e:
         valid = ", ".join(options.keys())
 
         raise UnknowMarketplaceError(
-            f"Marketplace '{marketplace}' is not defined in page_sender package. Valid options: {valid}"
+            f"Marketplace '{marketplace}' is not defined in page_infra package. Valid options: {valid}"
         ) from e

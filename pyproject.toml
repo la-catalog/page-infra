@@ -11,7 +11,6 @@ dependencies = [
     "meilisearch==0.23.0",
     "motor==3.1.1",
     "redis==4.4.2",
-    "structlog==22.3.0",
     "la-stopwatch==0.0.9",
     "page-models==0.2.2",
     "logger-utility==0.1.1",
